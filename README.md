@@ -45,6 +45,124 @@ CareCircle is an intelligent family care coordination platform that helps distri
 - **Voice Interface**: Amazon Lex, Amazon Polly (optional)
 - **Monitoring**: Amazon CloudWatch
 
+### System Architecture
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[React Web App<br/>AWS Amplify]
+        B[Cognito Auth]
+    end
+    
+    subgraph "API Layer"
+        C[API Gateway]
+        D[Lambda Functions]
+    end
+    
+    subgraph "AI Services"
+        E[Amazon Transcribe<br/>Speech-to-Text]
+        F[Amazon Comprehend<br/>NLP & Sentiment]
+        G[Amazon Bedrock<br/>Claude 3 Haiku]
+        H[Amazon Translate<br/>6 Languages]
+    end
+    
+    subgraph "Data Layer"
+        I[DynamoDB<br/>Family Data]
+        J[EventBridge<br/>Event Bus]
+    end
+    
+    subgraph "Notifications"
+        K[SNS/SES<br/>Alerts]
+    end
+    
+    A -->|Auth| B
+    A -->|API Calls| C
+    C --> D
+    D -->|Voice/Video| E
+    E --> F
+    F --> G
+    D --> H
+    D <-->|CRUD| I
+    D -->|Events| J
+    J -->|Triggers| D
+    D --> K
+    K -->|Email/SMS| A
+```
+
+### Frontend Architecture
+
+```mermaid
+graph LR
+    subgraph "React Application"
+        A[App.js<br/>Router]
+        B[Dashboard<br/>Unified View]
+        C[Today Page<br/>Care Queue]
+        D[Call Interface<br/>Voice/Video]
+        E[Family Mgmt<br/>Members & Elders]
+        F[i18n System<br/>6 Languages]
+    end
+    
+    subgraph "Components"
+        G[AlertBanner]
+        H[TakeActionWorkflow]
+        I[Navigation]
+    end
+    
+    subgraph "Services"
+        J[API Service<br/>Backend Calls]
+        K[Care Queue<br/>Task Prioritization]
+        L[Assignment Engine<br/>Smart Routing]
+    end
+    
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    B --> G
+    B --> H
+    C --> K
+    D --> J
+    E --> L
+    F -.->|Translates| B
+    F -.->|Translates| C
+    F -.->|Translates| D
+    J -->|REST API| M[API Gateway]
+```
+
+### Backend Data Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User/Family
+    participant FE as Frontend
+    participant API as API Gateway
+    participant L as Lambda
+    participant AI as AI Services
+    participant DB as DynamoDB
+    participant EB as EventBridge
+    participant N as Notifications
+    
+    U->>FE: Start Call
+    FE->>API: POST /calls/start
+    API->>L: Invoke Handler
+    L->>AI: Transcribe Audio
+    AI-->>L: Transcript
+    L->>AI: Analyze (Comprehend)
+    AI-->>L: Sentiment + Entities
+    L->>AI: Bedrock Reasoning
+    AI-->>L: Risk Assessment
+    L->>DB: Store Call Record
+    L->>EB: Publish Alert Event
+    EB->>L: Trigger Assignment
+    L->>DB: Query Family Members
+    L->>L: Calculate Best Match
+    L->>DB: Create Task
+    L->>N: Send Notification
+    N-->>U: Email/SMS Alert
+    L-->>FE: Response
+    FE-->>U: Show Dashboard
+```
+
 ### Key Features
 
 1. **Real-Time Behavioral Drift Detection**: AI analyzes voice/video calls for signs of memory lapses, confusion, or emotional distress
