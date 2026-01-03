@@ -1,0 +1,34 @@
+{
+  "name": "carecircle",
+  "version": "1.0.0",
+  "description": "AI-Powered Family Care Orchestration Platform",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "infrastructure"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../infrastructure && npm install",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && sam local start-api",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && pip install -r requirements.txt -t ./build",
+    "deploy:infra": "cd infrastructure && cdk deploy --all",
+    "deploy:frontend": "cd frontend && amplify publish",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && python -m pytest"
+  },
+  "keywords": [
+    "aws",
+    "ai",
+    "eldercare",
+    "caregiver",
+    "hackathon",
+    "amplify",
+    "bedrock"
+  ],
+  "author": "CareCircle Team",
+  "license": "UNLICENSED"
+}
+

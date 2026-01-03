@@ -1,0 +1,337 @@
+/* Care History Page - Timeline View */
+
+.care-history-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.care-history-page .page-header {
+  margin-bottom: 1.5rem;
+}
+
+.care-history-page .page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.care-history-page .subtitle {
+  color: var(--color-text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Filter Tabs */
+.history-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.history-filters .filter-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.history-filters .filter-btn:hover {
+  background: var(--color-bg);
+  border-color: var(--color-primary);
+}
+
+.history-filters .filter-btn.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Timeline */
+.history-timeline {
+  position: relative;
+}
+
+.timeline-group {
+  margin-bottom: 2rem;
+}
+
+.timeline-date {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  padding: 0.5rem 1rem;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.timeline-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-border);
+}
+
+.timeline-entry {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -1.4rem;
+  top: 1.25rem;
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+}
+
+.timeline-entry:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.entry-task::before {
+  background: #10b981;
+}
+
+.entry-alert::before {
+  background: #f59e0b;
+}
+
+.entry-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.entry-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.entry-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.entry-time {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.entry-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--color-text-primary);
+}
+
+.entry-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Empty State */
+.care-history-page .empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.care-history-page .empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.care-history-page .empty-state h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text-primary);
+}
+
+.care-history-page .empty-state p {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Call entries */
+.entry-call::before {
+  background: var(--color-primary);
+}
+
+.entry-call.clickable {
+  cursor: pointer;
+}
+
+.entry-duration {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Call Details Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.call-details {
+  padding: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-width: 80px;
+}
+
+.detail-value {
+  color: var(--color-text-primary);
+}
+
+.transcript-section,
+.analysis-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.transcript-section h3,
+.analysis-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--color-text-secondary);
+}
+
+.transcript-box {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  color: var(--color-text-primary);
+}
+
+.analysis-summary {
+  color: var(--color-text-primary);
+  margin: 0 0 1rem 0;
+}
+
+.concerns-list h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-warning);
+}
+
+.concerns-list ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.concerns-list li {
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.modal-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .timeline-entries {
+    padding-left: 0.75rem;
+  }
+  
+  .timeline-entry {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+

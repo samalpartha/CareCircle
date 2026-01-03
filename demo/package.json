@@ -1,0 +1,18 @@
+{
+  "name": "carecircle-demo-data",
+  "version": "1.0.0",
+  "description": "Demo data seeder for CareCircle",
+  "main": "seed-data.js",
+  "scripts": {
+    "seed": "node seed-data.js",
+    "seed:clear": "node seed-data.js --clear"
+  },
+  "keywords": ["demo", "seeder", "aws", "dynamodb"],
+  "author": "CareCircle Team",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1498.0",
+    "uuid": "^9.0.1"
+  }
+}
+

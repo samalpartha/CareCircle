@@ -1,0 +1,132 @@
+/* App Layout - Left Nav + Content */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* Main Content Area (excluding left nav) */
+.app-main {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1600px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .app-main {
+    margin-left: 70px;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* Amplify Authenticator Customization */
+[data-amplify-authenticator] {
+  --amplify-colors-brand-primary-10: #e6f2ff;
+  --amplify-colors-brand-primary-80: #0066cc;
+  --amplify-colors-brand-primary-90: #004d99;
+  --amplify-colors-brand-primary-100: #003366;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+  }
+}
+
+
+/* ========================================
+   RTL (Right-to-Left) Support for Arabic
+   ======================================== */
+
+/* Global RTL styles when html dir="rtl" */
+[dir="rtl"] .app-layout {
+  direction: rtl;
+}
+
+[dir="rtl"] .app-main {
+  margin-left: 0;
+  margin-right: 260px;
+}
+
+[dir="rtl"] .left-navigation {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .nav-link {
+  text-align: right;
+}
+
+[dir="rtl"] .nav-link .nav-icon {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
+[dir="rtl"] .top-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .header-actions {
+  flex-direction: row-reverse;
+}
+
+/* Cards and content */
+[dir="rtl"] .card,
+[dir="rtl"] .alert-card,
+[dir="rtl"] .task-card,
+[dir="rtl"] .risk-card {
+  text-align: right;
+}
+
+[dir="rtl"] .card-header,
+[dir="rtl"] .alert-header,
+[dir="rtl"] .task-header {
+  flex-direction: row-reverse;
+}
+
+/* Buttons and actions */
+[dir="rtl"] .btn-icon-left {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .btn-icon-left svg,
+[dir="rtl"] .btn-icon-left .icon {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* Lists and items */
+[dir="rtl"] ul,
+[dir="rtl"] ol {
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+/* Form inputs */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+}
+
+/* Mobile RTL */
+@media (max-width: 768px) {
+  [dir="rtl"] .app-main {
+    margin-right: 70px;
+    margin-left: 0;
+  }
+}

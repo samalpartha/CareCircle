@@ -1,0 +1,275 @@
+{
+  "app": {
+    "name": "CareCircle",
+    "tagline": "تنسيق رعاية عائلية مدعوم بالذكاء الاصطناعي"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "today": "اليوم",
+    "timeline": "الجدول الزمني للرعاية",
+    "medications": "الأدوية",
+    "family": "العائلة",
+    "emergencyHub": "مركز الطوارئ",
+    "tasks": "المهام",
+    "analytics": "التحليلات",
+    "profile": "الملف الشخصي",
+    "call": "اتصل بكبار السن",
+    "signOut": "تسجيل الخروج",
+    "alerts": "التنبيهات",
+    "settings": "الإعدادات",
+    "careActions": "إجراءات الرعاية",
+    "careHistory": "تاريخ الرعاية",
+    "reports": "التقارير",
+    "about": "حول",
+    "brandTagline": "منع الفشل. تقليل العبء.",
+    "userRole": "مقدم رعاية عائلية",
+    "signOutTitle": "تسجيل الخروج"
+  },
+  "dashboard": {
+    "title": "لوحة تحكم الرعاية العائلية",
+    "subtitle": "الكشف المبكر. استجابة منسقة. راحة البال.",
+    "welcome": "مرحبًا بعودتك، {{name}}",
+    "startCall": "بدء المكالمة",
+    "activeTasks": "الإجراءات النشطة",
+    "completedToday": "اكتملت اليوم",
+    "pendingTasks": "الإجراءات المعلقة",
+    "urgentAlerts": "تنبيهات عاجلة",
+    "recentAlerts": "التنبيهات الأخيرة",
+    "yourTasks": "إجراءات الرعاية الخاصة بك",
+    "quickActions": "إجراءات سريعة",
+    "noAlerts": "لا توجد تنبيهات عاجلة - كل شيء واضح!",
+    "noTasks": "كل شيء على ما يرام! لا توجد مهام نشطة.",
+    "aiRiskAssessment": "تقييم مخاطر الصحة بالذكاء الاصطناعي",
+    "cognitiveRisk": "المخاطر المعرفية",
+    "medicationAdherence": "الالتزام بالدواء",
+    "emotionalWellbeing": "الرفاهية العاطفية",
+    "urgentItemsNeedAttention": "{{count}} عنصر{{plural}} عاجل{{plural}} يحتاج{{verb}} إلى اهتمام اليوم",
+    "scrollDownToTakeAction": "قم بالتمرير لأسفل أو انقر لاتخاذ إجراء",
+    "takeActionNow": "اتخذ إجراء الآن",
+    "lastUpdated": "آخر تحديث:",
+    "dataOutdated": "قد تكون البيانات قديمة",
+    "retry": "إعادة المحاولة",
+    "todaysPriority": "أولوية اليوم",
+    "recently": "مؤخرًا",
+    "recommendedAction": "موصى به: المراجعة واتخاذ إجراء اليوم",
+    "takeAction": "اتخذ إجراء",
+    "whyThisAlert": "لماذا هذا التنبيه؟",
+    "confirmDeleteUrgent": "هل أنت متأكد من أنك تريد حذف هذا التنبيه العاجل؟ لا يمكن التراجع عن هذا.",
+    "deleteTaskConfirm": "حذف إجراء الرعاية هذا؟ لا يمكن التراجع عن هذا.",
+    "deleteTaskFailed": "فشل حذف المهمة. يرجى المحاولة مرة أخرى.",
+    "loadingDashboard": "جارٍ تحميل لوحة التحكم...",
+    "onboarding": {
+      "title": "ابدأ مع CareCircle",
+      "subtitle": "أكمل هذه الخطوات لبدء تنسيق الرعاية العائلية:",
+      "createTask": "إنشاء مهمتك الأولى",
+      "createTaskDesc": "إعداد تذكيرات ومهام الرعاية",
+      "createTaskButton": "إنشاء مهمة",
+      "startConversation": "بدء محادثة",
+      "startConversationDesc": "تسجيل وتحليل مكالمة بالذكاء الاصطناعي",
+      "startConversationButton": "بدء المكالمة",
+      "setupProfile": "إعداد ملفك الشخصي",
+      "setupProfileDesc": "أضف مهاراتك وتوفرك",
+      "setupProfileButton": "تحديث الملف الشخصي"
+    },
+    "emptyStates": {
+      "noAlertsCall": "ابدأ مكالمة لإنشاء تنبيهات",
+      "noTasksCreate": "إنشاء مهمتك الأولى"
+    },
+    "actions": {
+      "startCall": "بدء المكالمة",
+      "callDescription": "تواصل مع أحبائك واحصل على رؤى الذكاء الاصطناعي",
+      "manageTasks": "إدارة المهام",
+      "tasksDescription": "عرض وإكمال مهام الرعاية",
+      "viewAnalytics": "عرض التحليلات",
+      "analyticsDescription": "تتبع مقاييس واتجاهات الرعاية",
+      "settings": "الإعدادات",
+      "settingsDescription": "إدارة ملفك الشخصي وتفضيلاتك"
+    }
+  },
+  "today": {
+    "title": "قائمة انتظار الرعاية اليوم",
+    "subtitle": "تنسيق رعاية عائلية مدعوم بالذكاء الاصطناعي",
+    "filters": {
+      "all": "الكل",
+      "urgent": "عاجل",
+      "high": "عالي",
+      "medium": "متوسط",
+      "low": "منخفض",
+      "assignedToMe": "مخصص لي"
+    },
+    "actions": {
+      "takeAction": "اتخاذ إجراء",
+      "assign": "تعيين",
+      "snooze": "غفوة",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "empty": {
+      "title": "كل شيء على ما يرام!",
+      "message": "لا توجد إجراءات رعاية معلقة في هذا الوقت."
+    }
+  },
+  "family": {
+    "title": "إدارة العائلة",
+    "subtitle": "إدارة الأقارب المسنين ومقدمي الرعاية الأسرية",
+    "elderlyRelatives": "الأقارب المسنون",
+    "familyCaregivers": "مقدمو الرعاية الأسرية",
+    "addElder": "إضافة مسن",
+    "addCaregiver": "إضافة مقدم رعاية",
+    "fields": {
+      "name": "الاسم",
+      "location": "الموقع",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "conditions": "الحالات",
+      "medications": "الأدوية",
+      "relationship": "العلاقة",
+      "role": "الدور"
+    },
+    "actions": {
+      "edit": "تحرير",
+      "remove": "إزالة",
+      "viewProfile": "عرض الملف الشخصي"
+    }
+  },
+  "timeline": {
+    "title": "الجدول الزمني للرعاية",
+    "subtitle": "سجل تدقيق تاريخي لجميع أحداث الرعاية",
+    "filters": {
+      "allEvents": "جميع الأحداث",
+      "alerts": "التنبيهات",
+      "tasks": "المهام",
+      "triage": "الفرز",
+      "medications": "الأدوية",
+      "escalations": "التصعيدات"
+    },
+    "dateRange": {
+      "last24Hours": "آخر 24 ساعة",
+      "lastWeek": "الأسبوع الماضي",
+      "lastMonth": "الشهر الماضي",
+      "allTime": "كل الوقت"
+    }
+  },
+  "medications": {
+    "title": "الأدوية",
+    "subtitle": "تتبع وإدارة جداول الأدوية"
+  },
+  "emergencyHub": {
+    "title": "مركز الطوارئ",
+    "subtitle": "تنبيهات حرجة وبروتوكولات الطوارئ"
+  },
+  "task": {
+    "view": "عرض",
+    "noDescription": "لم يتم تقديم وصف",
+    "unassigned": "غير مخصص"
+  },
+  "tasks": {
+    "title": "مهام الرعاية",
+    "subtitle": "تدخلات موصى بها بالذكاء الاصطناعي لمنع التدهور وتقليل العبء",
+    "newTask": "مهمة جديدة",
+    "assignedToMe": "مخصص لي",
+    "allTasks": "جميع المهام",
+    "active": "نشط",
+    "completed": "مكتمل",
+    "priority": {
+      "urgent": "عاجل",
+      "high": "عالي",
+      "medium": "متوسط",
+      "low": "منخفض"
+    },
+    "status": {
+      "pending": "معلق",
+      "inProgress": "قيد التنفيذ",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "accept": "قبول الإجراء",
+    "complete": "إكمال",
+    "addNote": "إضافة ملاحظة",
+    "details": "تفاصيل المهمة",
+    "assignedTo": "مخصص لـ",
+    "createdAt": "تم الإنشاء",
+    "dueDate": "تاريخ الاستحقاق"
+  },
+  "alerts": {
+    "memoryIssue": "تم اكتشاف ارتباك في الذاكرة",
+    "emotionalDistress": "تم اكتشاف ضائقة عاطفية",
+    "medicationConcern": "قلق بشأن الدواء",
+    "urgentHelp": "مساعدة عاجلة مطلوبة",
+    "behavioralChange": "تم ملاحظة تغيير سلوكي",
+    "titles": {
+      "healthConcern": "تم اكتشاف مخاوف صحية",
+      "memoryIssue": "قلق متعلق بالذاكرة/الإدراك",
+      "emotionalDistress": "دعم عاطفي مطلوب",
+      "medicationConcern": "مراجعة الأدوية مطلوبة",
+      "urgentHelp": "⚠️ انتباه عاجل مطلوب",
+      "behavioralChange": "تم ملاحظة تغيير سلوكي",
+      "cognitiveRisk": "تنبيه مخاطر إدراكية",
+      "careAlert": "تنبيه رعاية"
+    },
+    "tiers": {
+      "urgent": "عاجل",
+      "attention": "انتباه",
+      "monitor": "مراقبة",
+      "info": "معلومات"
+    },
+    "sla": {
+      "immediate": "إجراء فوري مطلوب",
+      "twoHours": "استجابة خلال ساعتين",
+      "twentyFourHours": "استجابة خلال 24 ساعة",
+      "thisWeek": "مراجعة هذا الأسبوع",
+      "awareness": "لعلمك"
+    },
+    "deleteConfirm": "حذف هذا التنبيه؟ لا يمكن التراجع عن هذا الإجراءي.",
+    "deleteButton": "حذف التنبيه"
+  },
+  "call": {
+    "title": "مكالمة مع المسن",
+    "subtitle": "تسجيل وتحليل المحادثات للكشف عن المخاوف",
+    "startRecording": "بدء التسجيل",
+    "stopRecording": "إيقاف التسجيل",
+    "pause": "إيقاف مؤقت",
+    "resume": "استئناف",
+    "stop": "إيقاف",
+    "transcript": "النص",
+    "analysis": "تحليل الذكاء الاصطناعي",
+    "noTranscript": "تحدث لرؤية النص هنا...",
+    "connecting": "جارٍ الاتصال...",
+    "recording": "جارٍ التسجيل...",
+    "analyzing": "جارٍ التحليل بالذكاء الاصطناعي..."
+  },
+  "analytics": {
+    "title": "تحليلات الرعاية",
+    "subtitle": "هل الوضع يتحسن أم يزداد سوءًا؟ تتبع النتائج بمرور الوقت.",
+    "taskCompletion": "معدل إكمال المهام",
+    "responseTime": "متوسط وقت الاستجابة",
+    "activeMembers": "أفراد الأسرة النشطون",
+    "totalTasks": "إجمالي المهام",
+    "distribution": "توزيع المهام",
+    "trends": "اتجاهات السلوك",
+    "effectiveness": "فعالية التدخل"
+  },
+  "profile": {
+    "title": "إعدادات الملف الشخصي",
+    "subtitle": "إدارة ملفك الشخصي وتفضيلاتك",
+    "personalInfo": "المعلومات الشخصية",
+    "language": "اللغة المفضلة",
+    "zipCode": "الرمز البريدي",
+    "skills": "المهارات والخبرة",
+    "availability": "التوفر",
+    "notifications": "تفضيلات الإشعارات",
+    "save": "حفظ التغييرات"
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ",
+    "success": "نجاح!",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تحرير",
+    "close": "إغلاق",
+    "yes": "نعم",
+    "no": "لا",
+    "viewAll": "عرض الكل"
+  }
+}

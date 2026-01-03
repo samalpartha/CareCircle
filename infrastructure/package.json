@@ -1,0 +1,23 @@
+{
+  "name": "carecircle-infrastructure",
+  "version": "1.0.0",
+  "description": "CareCircle AWS CDK Infrastructure",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy",
+    "destroy": "cdk destroy"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.27",
+    "aws-cdk": "^2.115.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.115.0",
+    "constructs": "^10.3.0"
+  }
+}

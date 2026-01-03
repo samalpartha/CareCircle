@@ -1,0 +1,275 @@
+{
+  "app": {
+    "name": "CareCircle",
+    "tagline": "Orquestração de Cuidados Familiares Impulsionada por IA"
+  },
+  "navigation": {
+    "dashboard": "Painel",
+    "today": "Hoje",
+    "timeline": "Linha do Tempo de Cuidados",
+    "medications": "Medicamentos",
+    "family": "Família",
+    "emergencyHub": "Centro de Emergências",
+    "tasks": "Tarefas",
+    "analytics": "Análises",
+    "profile": "Perfil",
+    "call": "Ligar para Idoso",
+    "signOut": "Sair",
+    "alerts": "Alertas",
+    "settings": "Configurações",
+    "careActions": "Ações de Cuidado",
+    "careHistory": "Histórico de Cuidados",
+    "reports": "Relatórios",
+    "about": "Sobre",
+    "brandTagline": "Prevenir Falhas. Reduzir Carga.",
+    "userRole": "Cuidador Familiar",
+    "signOutTitle": "Sair"
+  },
+  "dashboard": {
+    "title": "Painel de Cuidados Familiares",
+    "subtitle": "Detecção precoce. Resposta coordenada. Tranquilidade.",
+    "welcome": "Bem-vindo de volta, {{name}}",
+    "startCall": "Iniciar Chamada",
+    "activeTasks": "Ações Ativas",
+    "completedToday": "Concluídas Hoje",
+    "pendingTasks": "Ações Pendentes",
+    "urgentAlerts": "Alertas Urgentes",
+    "recentAlerts": "Alertas Recentes",
+    "yourTasks": "Suas Ações de Cuidado",
+    "quickActions": "Ações Rápidas",
+    "noAlerts": "Sem alertas urgentes - tudo limpo!",
+    "noTasks": "Tudo em dia! Sem tarefas ativas.",
+    "aiRiskAssessment": "Avaliação de Risco de Saúde com IA",
+    "cognitiveRisk": "Risco Cognitivo",
+    "medicationAdherence": "Adesão à Medicação",
+    "emotionalWellbeing": "Bem-Estar Emocional",
+    "urgentItemsNeedAttention": "{{count}} item{{plural}} urgente{{plural}} precisa{{verb}} de atenção hoje",
+    "scrollDownToTakeAction": "Role para baixo ou clique para tomar ação",
+    "takeActionNow": "Tomar Ação Agora",
+    "lastUpdated": "Última atualização:",
+    "dataOutdated": "Os dados podem estar desatualizados",
+    "retry": "Tentar Novamente",
+    "todaysPriority": "PRIORIDADE DE HOJE",
+    "recently": "Recentemente",
+    "recommendedAction": "Recomendado: Revisar e tomar ação hoje",
+    "takeAction": "Tomar Ação",
+    "whyThisAlert": "Por Que Este Alerta?",
+    "confirmDeleteUrgent": "Tem certeza de que deseja excluir este alerta URGENTE? Isso não pode ser desfeito.",
+    "deleteTaskConfirm": "Excluir esta ação de cuidado? Isso não pode ser desfeito.",
+    "deleteTaskFailed": "Falha ao excluir tarefa. Por favor, tente novamente.",
+    "loadingDashboard": "Carregando painel...",
+    "onboarding": {
+      "title": "Comece com o CareCircle",
+      "subtitle": "Complete estas etapas para começar a coordenar os cuidados familiares:",
+      "createTask": "Crie sua primeira tarefa",
+      "createTaskDesc": "Configure lembretes e tarefas de cuidado",
+      "createTaskButton": "Criar Tarefa",
+      "startConversation": "Inicie uma conversa",
+      "startConversationDesc": "Grave e analise uma chamada com IA",
+      "startConversationButton": "Iniciar Chamada",
+      "setupProfile": "Configure seu perfil",
+      "setupProfileDesc": "Adicione suas habilidades e disponibilidade",
+      "setupProfileButton": "Atualizar Perfil"
+    },
+    "emptyStates": {
+      "noAlertsCall": "Inicie uma Chamada para Gerar Alertas",
+      "noTasksCreate": "Crie Sua Primeira Tarefa"
+    },
+    "actions": {
+      "startCall": "Iniciar Chamada",
+      "callDescription": "Conecte-se com seu ente querido e obtenha insights de IA",
+      "manageTasks": "Gerenciar Tarefas",
+      "tasksDescription": "Ver e concluir tarefas de cuidado",
+      "viewAnalytics": "Ver Análises",
+      "analyticsDescription": "Acompanhar métricas e tendências de cuidado",
+      "settings": "Configurações",
+      "settingsDescription": "Gerenciar seu perfil e preferências"
+    }
+  },
+  "today": {
+    "title": "Fila de Cuidados de Hoje",
+    "subtitle": "Orquestração de Cuidados Familiares Impulsionada por IA",
+    "filters": {
+      "all": "Todos",
+      "urgent": "Urgente",
+      "high": "Alto",
+      "medium": "Médio",
+      "low": "Baixo",
+      "assignedToMe": "Atribuídas a Mim"
+    },
+    "actions": {
+      "takeAction": "Tomar Ação",
+      "assign": "Atribuir",
+      "snooze": "Adiar",
+      "viewDetails": "Ver Detalhes"
+    },
+    "empty": {
+      "title": "Tudo em Dia!",
+      "message": "Sem ações de cuidado pendentes no momento."
+    }
+  },
+  "family": {
+    "title": "Gestão Familiar",
+    "subtitle": "Gerenciar parentes idosos e cuidadores familiares",
+    "elderlyRelatives": "Parentes Idosos",
+    "familyCaregivers": "Cuidadores Familiares",
+    "addElder": "Adicionar Idoso",
+    "addCaregiver": "Adicionar Cuidador",
+    "fields": {
+      "name": "Nome",
+      "location": "Localização",
+      "phone": "Telefone",
+      "email": "E-mail",
+      "conditions": "Condições",
+      "medications": "Medicamentos",
+      "relationship": "Relacionamento",
+      "role": "Função"
+    },
+    "actions": {
+      "edit": "Editar",
+      "remove": "Remover",
+      "viewProfile": "Ver Perfil"
+    }
+  },
+  "timeline": {
+    "title": "Linha do Tempo de Cuidados",
+    "subtitle": "Registro histórico de auditoria de todos os eventos de cuidado",
+    "filters": {
+      "allEvents": "Todos os Eventos",
+      "alerts": "Alertas",
+      "tasks": "Tarefas",
+      "triage": "Triagem",
+      "medications": "Medicamentos",
+      "escalations": "Escalações"
+    },
+    "dateRange": {
+      "last24Hours": "Últimas 24 Horas",
+      "lastWeek": "Última Semana",
+      "lastMonth": "Último Mês",
+      "allTime": "Todo o Tempo"
+    }
+  },
+  "medications": {
+    "title": "Medicamentos",
+    "subtitle": "Acompanhar e gerenciar horários de medicamentos"
+  },
+  "emergencyHub": {
+    "title": "Centro de Emergências",
+    "subtitle": "Alertas críticos e protocolos de emergência"
+  },
+  "task": {
+    "view": "Ver",
+    "noDescription": "Nenhuma descrição fornecida",
+    "unassigned": "Não atribuído"
+  },
+  "tasks": {
+    "title": "Tarefas de Cuidado",
+    "subtitle": "Intervenções recomendadas por IA para prevenir declínio e reduzir sobrecarga",
+    "newTask": "Nova Tarefa",
+    "assignedToMe": "Atribuídas a Mim",
+    "allTasks": "Todas as Tarefas",
+    "active": "Ativas",
+    "completed": "Concluídas",
+    "priority": {
+      "urgent": "Urgente",
+      "high": "Alto",
+      "medium": "Médio",
+      "low": "Baixo"
+    },
+    "status": {
+      "pending": "Pendente",
+      "inProgress": "Em Andamento",
+      "completed": "Concluída",
+      "cancelled": "Cancelada"
+    },
+    "accept": "Aceitar Ação",
+    "complete": "Concluir",
+    "addNote": "Adicionar Nota",
+    "details": "Detalhes da Tarefa",
+    "assignedTo": "Atribuído a",
+    "createdAt": "Criado em",
+    "dueDate": "Data de vencimento"
+  },
+  "alerts": {
+    "memoryIssue": "Confusão de memória detectada",
+    "emotionalDistress": "Angústia emocional detectada",
+    "medicationConcern": "Preocupação com medicamento",
+    "urgentHelp": "Ajuda urgente necessária",
+    "behavioralChange": "Mudança comportamental observada",
+    "titles": {
+      "healthConcern": "Preocupação de Saúde Detectada",
+      "memoryIssue": "Preocupação de Memória/Cognitiva",
+      "emotionalDistress": "Apoio Emocional Necessário",
+      "medicationConcern": "Revisão de Medicação Necessária",
+      "urgentHelp": "⚠️ Atenção Urgente Necessária",
+      "behavioralChange": "Mudança Comportamental Observada",
+      "cognitiveRisk": "Alerta de Risco Cognitivo",
+      "careAlert": "Alerta de Cuidado"
+    },
+    "tiers": {
+      "urgent": "URGENTE",
+      "attention": "ATENÇÃO",
+      "monitor": "MONITORAR",
+      "info": "INFO"
+    },
+    "sla": {
+      "immediate": "Ação imediata necessária",
+      "twoHours": "Resposta em 2 horas",
+      "twentyFourHours": "Resposta em 24 horas",
+      "thisWeek": "Revisar esta semana",
+      "awareness": "Para seu conhecimento"
+    },
+    "deleteConfirm": "Excluir este alerta? Esta ação não pode ser desfeita.",
+    "deleteButton": "Excluir alerta"
+  },
+  "call": {
+    "title": "Chamada com Idoso",
+    "subtitle": "Gravar e analisar conversas para detectar preocupações",
+    "startRecording": "Iniciar Gravação",
+    "stopRecording": "Parar Gravação",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "stop": "Parar",
+    "transcript": "Transcrição",
+    "analysis": "Análise de IA",
+    "noTranscript": "Fale para ver a transcrição aqui...",
+    "connecting": "Conectando...",
+    "recording": "Gravando...",
+    "analyzing": "Analisando com IA..."
+  },
+  "analytics": {
+    "title": "Análises de Cuidado",
+    "subtitle": "A situação está melhorando ou piorando? Acompanhe os resultados ao longo do tempo.",
+    "taskCompletion": "Taxa de Conclusão de Tarefas",
+    "responseTime": "Tempo Médio de Resposta",
+    "activeMembers": "Membros Familiares Ativos",
+    "totalTasks": "Total de Tarefas",
+    "distribution": "Distribuição de Tarefas",
+    "trends": "Tendências Comportamentais",
+    "effectiveness": "Eficácia da Intervenção"
+  },
+  "profile": {
+    "title": "Configurações de Perfil",
+    "subtitle": "Gerenciar seu perfil e preferências",
+    "personalInfo": "Informações Pessoais",
+    "language": "Idioma Preferido",
+    "zipCode": "Código Postal",
+    "skills": "Habilidades e Expertise",
+    "availability": "Disponibilidade",
+    "notifications": "Preferências de Notificação",
+    "save": "Salvar Alterações"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "success": "Sucesso!",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "close": "Fechar",
+    "yes": "Sim",
+    "no": "Não",
+    "viewAll": "Ver Tudo"
+  }
+}

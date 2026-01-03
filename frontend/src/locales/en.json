@@ -1,0 +1,275 @@
+{
+  "app": {
+    "name": "CareCircle",
+    "tagline": "Detect decline early. Reduce caregiver burden. Prevent emergencies."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "today": "Today",
+    "timeline": "Care Timeline",
+    "medications": "Medications",
+    "family": "Family",
+    "emergencyHub": "Emergency Hub",
+    "tasks": "Care Actions",
+    "analytics": "Analytics",
+    "profile": "Profile",
+    "call": "Call Elder",
+    "signOut": "Sign Out",
+    "alerts": "Risk Alerts",
+    "settings": "Settings",
+    "careActions": "Care Actions",
+    "careHistory": "Care History",
+    "reports": "Reports",
+    "about": "About",
+    "brandTagline": "Prevent Failure. Reduce Burden.",
+    "userRole": "Family Caregiver",
+    "signOutTitle": "Sign Out"
+  },
+  "dashboard": {
+    "title": "Care Status",
+    "subtitle": "Early detection. Coordinated response. Peace of mind.",
+    "welcome": "Welcome back, {{name}}",
+    "startCall": "Start Call",
+    "activeTasks": "Active Actions",
+    "completedToday": "Completed Today",
+    "pendingTasks": "Pending Actions",
+    "urgentAlerts": "Urgent Alerts",
+    "recentAlerts": "Recent Alerts",
+    "yourTasks": "Your Care Actions",
+    "quickActions": "Quick Actions",
+    "noAlerts": "No urgent alerts - all clear!",
+    "noTasks": "All caught up! No active tasks.",
+    "aiRiskAssessment": "AI Health Risk Assessment",
+    "cognitiveRisk": "Cognitive Risk",
+    "medicationAdherence": "Medication Adherence",
+    "emotionalWellbeing": "Emotional Wellbeing",
+    "urgentItemsNeedAttention": "{{count}} urgent item{{plural}} need{{verb}} attention today",
+    "scrollDownToTakeAction": "Scroll down or click to take action",
+    "takeActionNow": "Take Action Now",
+    "lastUpdated": "Last updated:",
+    "dataOutdated": "Data may be outdated",
+    "retry": "Retry",
+    "todaysPriority": "TODAY'S PRIORITY",
+    "recently": "Recently",
+    "recommendedAction": "Recommended: Review and take action today",
+    "takeAction": "Take Action",
+    "whyThisAlert": "Why This Alert?",
+    "confirmDeleteUrgent": "Are you sure you want to delete this URGENT alert? This cannot be undone.",
+    "deleteTaskConfirm": "Delete this care action? This cannot be undone.",
+    "deleteTaskFailed": "Failed to delete task. Please try again.",
+    "loadingDashboard": "Loading dashboard...",
+    "onboarding": {
+      "title": "Get Started with CareCircle",
+      "subtitle": "Complete these steps to begin coordinating family care:",
+      "createTask": "Create your first task",
+      "createTaskDesc": "Set up care reminders and to-dos",
+      "createTaskButton": "Create Task",
+      "startConversation": "Start a conversation",
+      "startConversationDesc": "Record and analyze a call with AI",
+      "startConversationButton": "Start Call",
+      "setupProfile": "Set up your profile",
+      "setupProfileDesc": "Add your skills and availability",
+      "setupProfileButton": "Update Profile"
+    },
+    "emptyStates": {
+      "noAlertsCall": "Start a Call to Generate Alerts",
+      "noTasksCreate": "Create Your First Task"
+    },
+    "actions": {
+      "startCall": "Start Call",
+      "callDescription": "Connect with your loved one and get AI insights",
+      "manageTasks": "Manage Tasks",
+      "tasksDescription": "View and complete care tasks",
+      "viewAnalytics": "View Analytics",
+      "analyticsDescription": "Track care metrics and trends",
+      "settings": "Settings",
+      "settingsDescription": "Manage your profile and preferences"
+    }
+  },
+  "today": {
+    "title": "Today's Care Queue",
+    "subtitle": "AI-Driven Family Care Orchestration",
+    "filters": {
+      "all": "All",
+      "urgent": "Urgent",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "assignedToMe": "Assigned to Me"
+    },
+    "actions": {
+      "takeAction": "Take Action",
+      "assign": "Assign",
+      "snooze": "Snooze",
+      "viewDetails": "View Details"
+    },
+    "empty": {
+      "title": "All Caught Up!",
+      "message": "No pending care actions at this time."
+    }
+  },
+  "family": {
+    "title": "Family Management",
+    "subtitle": "Manage elderly relatives and family caregivers",
+    "elderlyRelatives": "Elderly Relatives",
+    "familyCaregivers": "Family Caregivers",
+    "addElder": "Add Elder",
+    "addCaregiver": "Add Caregiver",
+    "fields": {
+      "name": "Name",
+      "location": "Location",
+      "phone": "Phone",
+      "email": "Email",
+      "conditions": "Conditions",
+      "medications": "Medications",
+      "relationship": "Relationship",
+      "role": "Role"
+    },
+    "actions": {
+      "edit": "Edit",
+      "remove": "Remove",
+      "viewProfile": "View Profile"
+    }
+  },
+  "timeline": {
+    "title": "Care Timeline",
+    "subtitle": "Historical audit log of all care events",
+    "filters": {
+      "allEvents": "All Events",
+      "alerts": "Alerts",
+      "tasks": "Tasks",
+      "triage": "Triage",
+      "medications": "Medications",
+      "escalations": "Escalations"
+    },
+    "dateRange": {
+      "last24Hours": "Last 24 Hours",
+      "lastWeek": "Last Week",
+      "lastMonth": "Last Month",
+      "allTime": "All Time"
+    }
+  },
+  "medications": {
+    "title": "Medications",
+    "subtitle": "Track and manage medication schedules"
+  },
+  "emergencyHub": {
+    "title": "Emergency Hub",
+    "subtitle": "Critical alerts and emergency protocols"
+  },
+  "task": {
+    "view": "View",
+    "noDescription": "No description provided",
+    "unassigned": "Unassigned"
+  },
+  "tasks": {
+    "title": "Care Actions",
+    "subtitle": "AI-recommended interventions to prevent decline and reduce burden",
+    "newTask": "New Task",
+    "assignedToMe": "Assigned to Me",
+    "allTasks": "All Tasks",
+    "active": "Active",
+    "completed": "Completed",
+    "priority": {
+      "urgent": "Urgent",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "status": {
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "accept": "Accept Action",
+    "complete": "Complete",
+    "addNote": "Add Note",
+    "details": "Action Details",
+    "assignedTo": "Assigned to",
+    "createdAt": "Created",
+    "dueDate": "Due date"
+  },
+  "alerts": {
+    "memoryIssue": "Memory confusion detected",
+    "emotionalDistress": "Emotional distress detected",
+    "medicationConcern": "Medication concern",
+    "urgentHelp": "Urgent help needed",
+    "behavioralChange": "Behavioral change noted",
+    "titles": {
+      "healthConcern": "Health Concern Detected",
+      "memoryIssue": "Memory/Cognitive Concern",
+      "emotionalDistress": "Emotional Support Needed",
+      "medicationConcern": "Medication Review Required",
+      "urgentHelp": "⚠️ Urgent Attention Required",
+      "behavioralChange": "Behavioral Change Noticed",
+      "cognitiveRisk": "Cognitive Risk Alert",
+      "careAlert": "Care Alert"
+    },
+    "tiers": {
+      "urgent": "URGENT",
+      "attention": "ATTENTION",
+      "monitor": "MONITOR",
+      "info": "INFO"
+    },
+    "sla": {
+      "immediate": "Immediate action required",
+      "twoHours": "Response within 2 hours",
+      "twentyFourHours": "Response within 24 hours",
+      "thisWeek": "Review this week",
+      "awareness": "For your awareness"
+    },
+    "deleteConfirm": "Delete this alert? This action cannot be undone.",
+    "deleteButton": "Delete alert"
+  },
+  "call": {
+    "title": "Call with Elder",
+    "subtitle": "Record and analyze conversations to detect concerns",
+    "startRecording": "Start Recording",
+    "stopRecording": "Stop Recording",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop",
+    "transcript": "Transcript",
+    "analysis": "AI Analysis",
+    "noTranscript": "Speak to see transcript here...",
+    "connecting": "Connecting...",
+    "recording": "Recording...",
+    "analyzing": "Analyzing with AI..."
+  },
+  "analytics": {
+    "title": "Care Analytics",
+    "subtitle": "Is the situation improving or worsening? Track outcomes over time.",
+    "taskCompletion": "Task Completion Rate",
+    "responseTime": "Average Response Time",
+    "activeMembers": "Active Family Members",
+    "totalTasks": "Total Tasks",
+    "distribution": "Task Distribution",
+    "trends": "Behavioral Trends",
+    "effectiveness": "Intervention Effectiveness"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "subtitle": "Manage your profile and preferences",
+    "personalInfo": "Personal Information",
+    "language": "Preferred Language",
+    "zipCode": "ZIP Code",
+    "skills": "Skills & Expertise",
+    "availability": "Availability",
+    "notifications": "Notification Preferences",
+    "save": "Save Changes"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "viewAll": "View All"
+  }
+}

@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: CareCircle Backend - AWS SAM Template (Local Development)
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.11
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: CareCircle-Data-v2
+        POWERTOOLS_SERVICE_NAME: CareCircle
+        LOG_LEVEL: INFO
+
+Resources:
+  # API Gateway - NO AUTH for local development
+  CareCircleAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: CareCircle-API-Local
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+
+  # Lambda Functions
+  APIHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/api-handlers/
+      Handler: app.lambda_handler
+      Events:
+        ProxyRoute:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /{proxy+}
+            Method: ANY
+        RootRoute:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /
+            Method: ANY
+
+Outputs:
+  CareCircleAPI:
+    Description: API Gateway endpoint URL
+    Value: !Sub 'https://${CareCircleAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/'

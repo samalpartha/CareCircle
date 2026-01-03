@@ -1,0 +1,551 @@
+.emergency-hub {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.country-selector {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+}
+
+/* SOS Section */
+.sos-section {
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(239, 68, 68, 0.05) 100%);
+  border: 2px solid var(--color-error);
+}
+
+.sos-section h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--color-error);
+}
+
+.sos-button {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--color-error);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
+.sos-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(239, 68, 68, 0.5);
+}
+
+.sos-button.active {
+  animation: pulse-sos 0.5s ease infinite;
+}
+
+.sos-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: width 0.3s ease;
+}
+
+.sos-text {
+  position: relative;
+  z-index: 1;
+}
+
+.sos-hint {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@keyframes pulse-sos {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Emergency Services */
+.emergency-services {
+  margin-bottom: 1.5rem;
+}
+
+.emergency-services h2 {
+  margin: 0 0 1rem 0;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.service-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.service-btn.ambulance:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+.service-btn.police:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+.service-btn.fire:hover { border-color: #f97316; background: rgba(249, 115, 22, 0.1); }
+.service-btn.poison:hover { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+
+.service-icon {
+  font-size: 2.5rem;
+}
+
+.service-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.service-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Medical ID Card */
+.medical-id-card {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.medical-id-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.medical-id-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.medical-id-header h2 {
+  margin: 0;
+}
+
+.medical-id-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.id-row {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.id-row .id-label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-width: 100px;
+}
+
+.id-row .id-value {
+  color: var(--color-text-primary);
+}
+
+.id-row.allergies .id-value {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.no-medical-id {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Contacts Section */
+.contacts-section {
+  margin-bottom: 2rem;
+}
+
+.contacts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.contacts-header h2 {
+  margin: 0;
+}
+
+.contact-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-group h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.contact-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.contact-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-card.local {
+  border-left: 4px solid var(--color-success);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.contact-card.medical {
+  border-left: 4px solid var(--color-primary);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.contact-relationship {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.has-key-badge {
+  font-size: 0.75rem;
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.response-time {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.contact-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Modal Styles - reuse from Medications */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.contact-form {
+  padding: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Medical ID Full Modal */
+.medical-id-full {
+  max-width: 600px;
+}
+
+.medical-id-modal-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: white;
+}
+
+.medical-id-modal-header h2 {
+  color: white;
+}
+
+.medical-id-modal-header .modal-close {
+  color: white;
+}
+
+.medical-id-content {
+  padding: 1.5rem;
+}
+
+.id-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.id-section:last-of-type {
+  border-bottom: none;
+}
+
+.id-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.id-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.id-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.field-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.condition-tags,
+.allergy-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.condition-tag {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.allergy-tag {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-error);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.medication-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.medication-list li {
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.emergency-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.emergency-contact-item:last-child {
+  border-bottom: none;
+}
+
+.ec-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ec-relation {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.ec-phone {
+  margin-left: auto;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.no-data {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.id-footer {
+  text-align: center;
+  padding-top: 1rem;
+  color: var(--color-text-secondary);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .emergency-hub {
+    padding: 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .id-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+

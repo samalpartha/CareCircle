@@ -1,0 +1,275 @@
+{
+  "app": {
+    "name": "CareCircle",
+    "tagline": "एआई-संचालित पारिवारिक देखभाल समन्वय"
+  },
+  "navigation": {
+    "dashboard": "डैशबोर्ड",
+    "today": "आज",
+    "timeline": "देखभाल समयरेखा",
+    "medications": "दवाइयाँ",
+    "family": "परिवार",
+    "emergencyHub": "आपातकालीन केंद्र",
+    "tasks": "कार्य",
+    "analytics": "विश्लेषण",
+    "profile": "प्रोफ़ाइल",
+    "call": "बुज़ुर्ग को कॉल करें",
+    "signOut": "साइन आउट",
+    "alerts": "अलर्ट",
+    "settings": "सेटिंग्स",
+    "careActions": "देखभाल कार्य",
+    "careHistory": "देखभाल इतिहास",
+    "reports": "रिपोर्ट",
+    "about": "के बारे में",
+    "brandTagline": "विफलता रोकें. बोझ कम करें.",
+    "userRole": "पारिवारिक देखभालकर्ता",
+    "signOutTitle": "साइन आउट"
+  },
+  "dashboard": {
+    "title": "पारिवारिक देखभाल डैशबोर्ड",
+    "subtitle": "शीघ्र पहचान। समन्वित प्रतिक्रिया। मन की शांति।",
+    "welcome": "वापस स्वागत है, {{name}}",
+    "startCall": "कॉल शुरू करें",
+    "activeTasks": "सक्रिय कार्य",
+    "completedToday": "आज पूर्ण",
+    "pendingTasks": "लंबित कार्य",
+    "urgentAlerts": "तत्काल अलर्ट",
+    "recentAlerts": "हाल के अलर्ट",
+    "yourTasks": "आपके देखभाल कार्य",
+    "quickActions": "त्वरित कार्य",
+    "noAlerts": "कोई तत्काल अलर्ट नहीं - सब ठीक है!",
+    "noTasks": "सब पूरा हो गया! कोई सक्रिय कार्य नहीं।",
+    "aiRiskAssessment": "एआई स्वास्थ्य जोखिम मूल्यांकन",
+    "cognitiveRisk": "संज्ञानात्मक जोखिम",
+    "medicationAdherence": "दवा पालन",
+    "emotionalWellbeing": "भावनात्मक कल्याण",
+    "urgentItemsNeedAttention": "{{count}} तत्काल वस्तु{{plural}} को आज ध्यान की आवश्यकता है",
+    "scrollDownToTakeAction": "नीचे स्क्रॉल करें या कार्रवाई करने के लिए क्लिक करें",
+    "takeActionNow": "अभी कार्रवाई करें",
+    "lastUpdated": "अंतिम अपडेट:",
+    "dataOutdated": "डेटा पुराना हो सकता है",
+    "retry": "पुनः प्रयास करें",
+    "todaysPriority": "आज की प्राथमिकता",
+    "recently": "हाल ही में",
+    "recommendedAction": "अनुशंसित: आज समीक्षा और कार्रवाई करें",
+    "takeAction": "कार्रवाई करें",
+    "whyThisAlert": "यह अलर्ट क्यों?",
+    "confirmDeleteUrgent": "क्या आप वाकई इस तत्काल अलर्ट को हटाना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता.",
+    "deleteTaskConfirm": "इस देखभाल कार्य को हटाएं? इसे पूर्ववत नहीं किया जा सकता.",
+    "deleteTaskFailed": "कार्य हटाने में विफल. कृपया पुनः प्रयास करें.",
+    "loadingDashboard": "डैशबोर्ड लोड हो रहा है...",
+    "onboarding": {
+      "title": "CareCircle के साथ शुरू करें",
+      "subtitle": "पारिवारिक देखभाल समन्वय शुरू करने के लिए ये कदम पूरे करें:",
+      "createTask": "अपना पहला कार्य बनाएं",
+      "createTaskDesc": "देखभाल अनुस्मारक और कार्य सेट करें",
+      "createTaskButton": "कार्य बनाएं",
+      "startConversation": "बातचीत शुरू करें",
+      "startConversationDesc": "एआई के साथ कॉल रिकॉर्ड और विश्लेषण करें",
+      "startConversationButton": "कॉल शुरू करें",
+      "setupProfile": "अपनी प्रोफ़ाइल सेट करें",
+      "setupProfileDesc": "अपने कौशल और उपलब्धता जोड़ें",
+      "setupProfileButton": "प्रोफ़ाइल अपडेट करें"
+    },
+    "emptyStates": {
+      "noAlertsCall": "अलर्ट जेनरेट करने के लिए कॉल शुरू करें",
+      "noTasksCreate": "अपना पहला कार्य बनाएं"
+    },
+    "actions": {
+      "startCall": "कॉल शुरू करें",
+      "callDescription": "अपने प्रियजन से जुड़ें और एआई अंतर्दृष्टि प्राप्त करें",
+      "manageTasks": "कार्य प्रबंधित करें",
+      "tasksDescription": "देखभाल कार्य देखें और पूर्ण करें",
+      "viewAnalytics": "विश्लेषण देखें",
+      "analyticsDescription": "देखभाल मेट्रिक्स और रुझान ट्रैक करें",
+      "settings": "सेटिंग्स",
+      "settingsDescription": "अपनी प्रोफ़ाइल और प्राथमिकताएं प्रबंधित करें"
+    }
+  },
+  "today": {
+    "title": "आज की देखभाल कतार",
+    "subtitle": "एआई-संचालित पारिवारिक देखभाल समन्वय",
+    "filters": {
+      "all": "सभी",
+      "urgent": "तत्काल",
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कम",
+      "assignedToMe": "मुझे सौंपा गया"
+    },
+    "actions": {
+      "takeAction": "कार्रवाई करें",
+      "assign": "सौंपें",
+      "snooze": "स्नूज़ करें",
+      "viewDetails": "विवरण देखें"
+    },
+    "empty": {
+      "title": "सब पूरा हो गया!",
+      "message": "इस समय कोई लंबित देखभाल कार्य नहीं।"
+    }
+  },
+  "family": {
+    "title": "पारिवारिक प्रबंधन",
+    "subtitle": "बुजुर्ग रिश्तेदारों और पारिवारिक देखभालकर्ताओं का प्रबंधन करें",
+    "elderlyRelatives": "बुजुर्ग रिश्तेदार",
+    "familyCaregivers": "पारिवारिक देखभालकर्ता",
+    "addElder": "बुजुर्ग जोड़ें",
+    "addCaregiver": "देखभालकर्ता जोड़ें",
+    "fields": {
+      "name": "नाम",
+      "location": "स्थान",
+      "phone": "फ़ोन",
+      "email": "ईमेल",
+      "conditions": "स्थितियाँ",
+      "medications": "दवाइयाँ",
+      "relationship": "रिश्ता",
+      "role": "भूमिका"
+    },
+    "actions": {
+      "edit": "संपादित करें",
+      "remove": "हटाएं",
+      "viewProfile": "प्रोफ़ाइल देखें"
+    }
+  },
+  "timeline": {
+    "title": "देखभाल समयरेखा",
+    "subtitle": "सभी देखभाल घटनाओं का ऐतिहासिक ऑडिट लॉग",
+    "filters": {
+      "allEvents": "सभी घटनाएं",
+      "alerts": "अलर्ट",
+      "tasks": "कार्य",
+      "triage": "ट्राइएज",
+      "medications": "दवाइयाँ",
+      "escalations": "वृद्धि"
+    },
+    "dateRange": {
+      "last24Hours": "पिछले 24 घंटे",
+      "lastWeek": "पिछला सप्ताह",
+      "lastMonth": "पिछला महीना",
+      "allTime": "सभी समय"
+    }
+  },
+  "medications": {
+    "title": "दवाइयाँ",
+    "subtitle": "दवा कार्यक्रम ट्रैक और प्रबंधित करें"
+  },
+  "emergencyHub": {
+    "title": "आपातकालीन केंद्र",
+    "subtitle": "महत्वपूर्ण अलर्ट और आपातकालीन प्रोटोकॉल"
+  },
+  "task": {
+    "view": "देखें",
+    "noDescription": "कोई विवरण प्रदान नहीं किया गया",
+    "unassigned": "असाइन नहीं किया गया"
+  },
+  "tasks": {
+    "title": "देखभाल कार्य",
+    "subtitle": "गिरावट को रोकने और बोझ कम करने के लिए एआई-अनुशंसित हस्तक्षेप",
+    "newTask": "नया कार्य",
+    "assignedToMe": "मुझे सौंपा गया",
+    "allTasks": "सभी कार्य",
+    "active": "सक्रिय",
+    "completed": "पूर्ण",
+    "priority": {
+      "urgent": "तत्काल",
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कम"
+    },
+    "status": {
+      "pending": "लंबित",
+      "inProgress": "प्रगति में",
+      "completed": "पूर्ण",
+      "cancelled": "रद्द"
+    },
+    "accept": "कार्य स्वीकार करें",
+    "complete": "पूर्ण",
+    "addNote": "नोट जोड़ें",
+    "details": "कार्य विवरण",
+    "assignedTo": "सौंपा गया",
+    "createdAt": "बनाया गया",
+    "dueDate": "नियत तारीख"
+  },
+  "alerts": {
+    "memoryIssue": "स्मृति भ्रम पता चला",
+    "emotionalDistress": "भावनात्मक संकट पता चला",
+    "medicationConcern": "दवा की चिंता",
+    "urgentHelp": "तत्काल मदद की आवश्यकता",
+    "behavioralChange": "व्यवहार परिवर्तन नोट किया गया",
+    "titles": {
+      "healthConcern": "स्वास्थ्य चिंता पता चली",
+      "memoryIssue": "स्मृति/संज्ञानात्मक चिंता",
+      "emotionalDistress": "भावनात्मक समर्थन आवश्यक",
+      "medicationConcern": "दवा समीक्षा आवश्यक",
+      "urgentHelp": "⚠️ तत्काल ध्यान आवश्यक",
+      "behavioralChange": "व्यवहार परिवर्तन देखा गया",
+      "cognitiveRisk": "संज्ञानात्मक जोखिम अलर्ट",
+      "careAlert": "देखभाल अलर्ट"
+    },
+    "tiers": {
+      "urgent": "तत्काल",
+      "attention": "ध्यान",
+      "monitor": "निगरानी",
+      "info": "जानकारी"
+    },
+    "sla": {
+      "immediate": "तत्काल कार्रवाई आवश्यक",
+      "twoHours": "2 घंटे में प्रतिक्रिया",
+      "twentyFourHours": "24 घंटे में प्रतिक्रिया",
+      "thisWeek": "इस सप्ताह समीक्षा करें",
+      "awareness": "आपकी जानकारी के लिए"
+    },
+    "deleteConfirm": "इस अलर्ट को हटाएं? इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+    "deleteButton": "अलर्ट हटाएं"
+  },
+  "call": {
+    "title": "बुज़ुर्ग के साथ कॉल",
+    "subtitle": "चिंताओं का पता लगाने के लिए बातचीत रिकॉर्ड और विश्लेषण करें",
+    "startRecording": "रिकॉर्डिंग शुरू करें",
+    "stopRecording": "रिकॉर्डिंग बंद करें",
+    "pause": "रोकें",
+    "resume": "फिर से शुरू करें",
+    "stop": "बंद करें",
+    "transcript": "प्रतिलेख",
+    "analysis": "एआई विश्लेषण",
+    "noTranscript": "प्रतिलेख यहां देखने के लिए बोलें...",
+    "connecting": "कनेक्ट हो रहा है...",
+    "recording": "रिकॉर्ड हो रहा है...",
+    "analyzing": "एआई के साथ विश्लेषण कर रहा है..."
+  },
+  "analytics": {
+    "title": "देखभाल विश्लेषण",
+    "subtitle": "क्या स्थिति में सुधार हो रहा है या बिगड़ रहा है? समय के साथ परिणाम ट्रैक करें।",
+    "taskCompletion": "कार्य पूर्णता दर",
+    "responseTime": "औसत प्रतिक्रिया समय",
+    "activeMembers": "सक्रिय पारिवारिक सदस्य",
+    "totalTasks": "कुल कार्य",
+    "distribution": "कार्य वितरण",
+    "trends": "व्यवहार रुझान",
+    "effectiveness": "हस्तक्षेप प्रभावशीलता"
+  },
+  "profile": {
+    "title": "प्रोफ़ाइल सेटिंग्स",
+    "subtitle": "अपनी प्रोफ़ाइल और प्राथमिकताएं प्रबंधित करें",
+    "personalInfo": "व्यक्तिगत जानकारी",
+    "language": "पसंदीदा भाषा",
+    "zipCode": "पिन कोड",
+    "skills": "कौशल और विशेषज्ञता",
+    "availability": "उपलब्धता",
+    "notifications": "सूचना प्राथमिकताएं",
+    "save": "परिवर्तन सहेजें"
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "एक त्रुटि हुई",
+    "success": "सफलता!",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "close": "बंद करें",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "viewAll": "सभी देखें"
+  }
+}

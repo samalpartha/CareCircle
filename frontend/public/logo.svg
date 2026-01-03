@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="180" fill="#1E3A5F"/>
+  
+  <!-- Brain with heartbeat -->
+  <g transform="translate(200, 200)">
+    <!-- Brain outline -->
+    <path d="M-40,-20 Q-50,-40 -30,-50 Q-10,-55 0,-50 Q10,-55 30,-50 Q50,-40 40,-20 Q45,0 40,20 Q50,40 30,50 Q10,55 0,50 Q-10,55 -30,50 Q-50,40 -40,20 Q-45,0 -40,-20Z" fill="#4A90E2" opacity="0.3"/>
+    
+    <!-- Brain details -->
+    <path d="M-20,-30 Q-15,-35 -10,-30 Q-5,-25 -10,-20 Q-15,-15 -20,-20 Q-25,-25 -20,-30" stroke="#4A90E2" stroke-width="2" fill="none"/>
+    <path d="M10,-30 Q15,-35 20,-30 Q25,-25 20,-20 Q15,-15 10,-20 Q5,-25 10,-30" stroke="#4A90E2" stroke-width="2" fill="none"/>
+    
+    <!-- Heartbeat line -->
+    <path d="M-60,0 L-50,0 L-45,-15 L-40,15 L-35,0 L60,0" stroke="#F5A623" stroke-width="3" fill="none"/>
+  </g>
+  
+  <!-- People figures in circle -->
+  <!-- Top person (light blue) -->
+  <g transform="translate(200, 50)">
+    <circle cx="0" cy="-10" r="15" fill="#87CEEB"/>
+    <circle cx="0" cy="10" r="18" fill="#87CEEB"/>
+  </g>
+  
+  <!-- Top-right person (orange) -->
+  <g transform="translate(320, 120)">
+    <circle cx="0" cy="-10" r="15" fill="#F5A623"/>
+    <circle cx="0" cy="10" r="18" fill="#F5A623"/>
+  </g>
+  
+  <!-- Bottom-right person (dark blue) -->
+  <g transform="translate(320, 280)">
+    <circle cx="0" cy="-10" r="15" fill="#1E3A5F"/>
+    <circle cx="0" cy="10" r="18" fill="#1E3A5F"/>
+  </g>
+  
+  <!-- Bottom-left person (dark blue) -->
+  <g transform="translate(80, 280)">
+    <circle cx="0" cy="-10" r="15" fill="#1E3A5F"/>
+    <circle cx="0" cy="10" r="18" fill="#1E3A5F"/>
+  </g>
+  
+  <!-- Top-left person (dark blue) -->
+  <g transform="translate(80, 120)">
+    <circle cx="0" cy="-10" r="15" fill="#1E3A5F"/>
+    <circle cx="0" cy="10" r="18" fill="#1E3A5F"/>
+  </g>
+  
+  <!-- Connecting arcs (blue and orange) -->
+  <path d="M 200,50 A 150,150 0 0,1 320,120" stroke="#4A90E2" stroke-width="20" fill="none" opacity="0.7"/>
+  <path d="M 320,120 A 150,150 0 0,1 320,280" stroke="#F5A623" stroke-width="20" fill="none" opacity="0.7"/>
+  <path d="M 320,280 A 150,150 0 0,1 80,280" stroke="#4A90E2" stroke-width="20" fill="none" opacity="0.7"/>
+  <path d="M 80,280 A 150,150 0 0,1 80,120" stroke="#F5A623" stroke-width="20" fill="none" opacity="0.7"/>
+  <path d="M 80,120 A 150,150 0 0,1 200,50" stroke="#4A90E2" stroke-width="20" fill="none" opacity="0.7"/>
+</svg>
+
+
+
+
+

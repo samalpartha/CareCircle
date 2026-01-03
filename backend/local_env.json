@@ -1,0 +1,27 @@
+{
+    "APIHandlerFunction": {
+        "DYNAMODB_TABLE": "CareCircle-Data-v2",
+        "POWERTOOLS_SERVICE_NAME": "CareCircle",
+        "LOG_LEVEL": "INFO"
+    },
+    "AIAnalysisFunction": {
+        "DYNAMODB_TABLE": "CareCircle-Data-v2",
+        "POWERTOOLS_SERVICE_NAME": "CareCircle",
+        "LOG_LEVEL": "INFO"
+    },
+    "TaskAssignmentFunction": {
+        "DYNAMODB_TABLE": "CareCircle-Data-v2",
+        "POWERTOOLS_SERVICE_NAME": "CareCircle",
+        "LOG_LEVEL": "INFO"
+    },
+    "NotificationHandlerFunction": {
+        "DYNAMODB_TABLE": "CareCircle-Data-v2",
+        "POWERTOOLS_SERVICE_NAME": "CareCircle",
+        "LOG_LEVEL": "INFO"
+    },
+    "TranscribeHandlerFunction": {
+        "DYNAMODB_TABLE": "CareCircle-Data-v2",
+        "POWERTOOLS_SERVICE_NAME": "CareCircle",
+        "LOG_LEVEL": "INFO"
+    }
+}

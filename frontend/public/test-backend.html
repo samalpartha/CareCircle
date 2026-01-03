@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Backend Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    .test { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+    .error { color: red; }
+    .success { color: green; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🧪 CareCircle Backend Test</h1>
+  
+  <div class="test">
+    <h2>Step 1: Test API Gateway</h2>
+    <button onclick="testAPIGateway()">Test API Gateway</button>
+    <div id="api-result"></div>
+  </div>
+  
+  <div class="test">
+    <h2>Step 2: Get Token from LocalStorage</h2>
+    <button onclick="getToken()">Get Token</button>
+    <div id="token-result"></div>
+  </div>
+  
+  <div class="test">
+    <h2>Step 3: Test AI Analysis</h2>
+    <button onclick="testAI()">Test AI Analysis</button>
+    <div id="ai-result"></div>
+  </div>
+  
+  <script>
+    const API_BASE = 'https://gb1jhkkzl2.execute-api.us-east-1.amazonaws.com/prod';
+    let token = '';
+    
+    async function testAPIGateway() {
+      const result = document.getElementById('api-result');
+      result.innerHTML = '⏳ Testing...';
+      
+      try {
+        const response = await fetch(`${API_BASE}/alerts`);
+        if (response.status === 401) {
+          result.innerHTML = '<div class="success">✅ API Gateway is responding! (401 = needs auth, which is correct)</div>';
+        } else {
+          result.innerHTML = `<div class="success">✅ API Gateway is responding! Status: ${response.status}</div>`;
+        }
+      } catch (error) {
+        result.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+      }
+    }
+    
+    function getToken() {
+      const result = document.getElementById('token-result');
+      const prefix = 'CognitoIdentityServiceProvider.3fnpfoqg3f2vevpfqqtt9rqui0';
+      const user = localStorage.getItem(prefix + '.LastAuthUser');
+      
+      if (!user) {
+        result.innerHTML = '<div class="error">❌ No user found. Please sign in to the app first!</div>';
+        return;
+      }
+      
+      token = localStorage.getItem(`${prefix}.${user}.idToken`);
+      
+      if (token) {
+        result.innerHTML = `
+          <div class="success">✅ Token found!</div>
+          <div>User: ${user}</div>
+          <div>Token length: ${token.length}</div>
+          <textarea style="width: 100%; height: 60px; font-size: 10px;">${token}</textarea>
+        `;
+      } else {
+        result.innerHTML = '<div class="error">❌ Token not found. Sign in to the app first!</div>';
+      }
+    }
+    
+    async function testAI() {
+      const result = document.getElementById('ai-result');
+      
+      if (!token) {
+        result.innerHTML = '<div class="error">❌ Please get token first (Step 2)</div>';
+        return;
+      }
+      
+      result.innerHTML = '⏳ Testing AI Analysis... (this may take 10-15 seconds for first call)';
+      
+      try {
+        const response = await fetch(`${API_BASE}/analyze/transcript`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            transcript: "I feel dizzy and forgot my medication",
+            duration: 10,
+            language: "en"
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          result.innerHTML = `
+            <div class="success">✅ AI Analysis Works!</div>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          `;
+        } else {
+          result.innerHTML = `
+            <div class="error">❌ Error: ${response.status}</div>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          `;
+        }
+      } catch (error) {
+        result.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+

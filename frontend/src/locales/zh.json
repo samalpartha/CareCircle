@@ -1,0 +1,275 @@
+{
+  "app": {
+    "name": "CareCircle",
+    "tagline": "AI驱动的家庭护理协调"
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "today": "今天",
+    "timeline": "护理时间线",
+    "medications": "药物",
+    "family": "家庭",
+    "emergencyHub": "紧急中心",
+    "tasks": "任务",
+    "analytics": "分析",
+    "profile": "个人资料",
+    "call": "呼叫长者",
+    "signOut": "退出",
+    "alerts": "警报",
+    "settings": "设置",
+    "careActions": "护理行动",
+    "careHistory": "护理历史",
+    "reports": "报告",
+    "about": "关于",
+    "brandTagline": "预防失败。减轻负担。",
+    "userRole": "家庭护理人员",
+    "signOutTitle": "退出"
+  },
+  "dashboard": {
+    "title": "家庭护理仪表板",
+    "subtitle": "早期检测。协调响应。安心无忧。",
+    "welcome": "欢迎回来，{{name}}",
+    "startCall": "开始通话",
+    "activeTasks": "活跃行动",
+    "completedToday": "今天完成",
+    "pendingTasks": "待处理行动",
+    "urgentAlerts": "紧急警报",
+    "recentAlerts": "最近警报",
+    "yourTasks": "您的护理行动",
+    "quickActions": "快速行动",
+    "noAlerts": "没有紧急警报 - 一切正常！",
+    "noTasks": "全部完成！没有活跃任务。",
+    "aiRiskAssessment": "AI健康风险评估",
+    "cognitiveRisk": "认知风险",
+    "medicationAdherence": "药物依从性",
+    "emotionalWellbeing": "情绪健康",
+    "urgentItemsNeedAttention": "{{count}}个紧急项目需要今天处理",
+    "scrollDownToTakeAction": "向下滚动或点击采取行动",
+    "takeActionNow": "立即采取行动",
+    "lastUpdated": "最后更新：",
+    "dataOutdated": "数据可能已过时",
+    "retry": "重试",
+    "todaysPriority": "今日优先事项",
+    "recently": "最近",
+    "recommendedAction": "建议：今天审查并采取行动",
+    "takeAction": "采取行动",
+    "whyThisAlert": "为什么有这个警报？",
+    "confirmDeleteUrgent": "您确定要删除这个紧急警报吗？此操作无法撤销。",
+    "deleteTaskConfirm": "删除此护理行动？此操作无法撤销。",
+    "deleteTaskFailed": "删除任务失败。请重试。",
+    "loadingDashboard": "加载仪表板中...",
+    "onboarding": {
+      "title": "开始使用CareCircle",
+      "subtitle": "完成这些步骤开始协调家庭护理：",
+      "createTask": "创建您的第一个任务",
+      "createTaskDesc": "设置护理提醒和待办事项",
+      "createTaskButton": "创建任务",
+      "startConversation": "开始对话",
+      "startConversationDesc": "使用AI记录和分析通话",
+      "startConversationButton": "开始通话",
+      "setupProfile": "设置您的个人资料",
+      "setupProfileDesc": "添加您的技能和可用性",
+      "setupProfileButton": "更新个人资料"
+    },
+    "emptyStates": {
+      "noAlertsCall": "开始通话以生成警报",
+      "noTasksCreate": "创建您的第一个任务"
+    },
+    "actions": {
+      "startCall": "开始通话",
+      "callDescription": "与您的亲人联系并获取AI见解",
+      "manageTasks": "管理任务",
+      "tasksDescription": "查看和完成护理任务",
+      "viewAnalytics": "查看分析",
+      "analyticsDescription": "跟踪护理指标和趋势",
+      "settings": "设置",
+      "settingsDescription": "管理您的个人资料和偏好"
+    }
+  },
+  "today": {
+    "title": "今天的护理队列",
+    "subtitle": "AI驱动的家庭护理协调",
+    "filters": {
+      "all": "全部",
+      "urgent": "紧急",
+      "high": "高",
+      "medium": "中",
+      "low": "低",
+      "assignedToMe": "分配给我"
+    },
+    "actions": {
+      "takeAction": "采取行动",
+      "assign": "分配",
+      "snooze": "暂停",
+      "viewDetails": "查看详情"
+    },
+    "empty": {
+      "title": "全部完成！",
+      "message": "此时没有待处理的护理行动。"
+    }
+  },
+  "family": {
+    "title": "家庭管理",
+    "subtitle": "管理年长亲属和家庭护理人员",
+    "elderlyRelatives": "年长亲属",
+    "familyCaregivers": "家庭护理人员",
+    "addElder": "添加长者",
+    "addCaregiver": "添加护理人员",
+    "fields": {
+      "name": "姓名",
+      "location": "位置",
+      "phone": "电话",
+      "email": "电子邮件",
+      "conditions": "状况",
+      "medications": "药物",
+      "relationship": "关系",
+      "role": "角色"
+    },
+    "actions": {
+      "edit": "编辑",
+      "remove": "删除",
+      "viewProfile": "查看个人资料"
+    }
+  },
+  "timeline": {
+    "title": "护理时间线",
+    "subtitle": "所有护理事件的历史审计日志",
+    "filters": {
+      "allEvents": "所有事件",
+      "alerts": "警报",
+      "tasks": "任务",
+      "triage": "分诊",
+      "medications": "药物",
+      "escalations": "升级"
+    },
+    "dateRange": {
+      "last24Hours": "过去24小时",
+      "lastWeek": "上周",
+      "lastMonth": "上月",
+      "allTime": "所有时间"
+    }
+  },
+  "medications": {
+    "title": "药物",
+    "subtitle": "跟踪和管理药物时间表"
+  },
+  "emergencyHub": {
+    "title": "紧急中心",
+    "subtitle": "关键警报和紧急协议"
+  },
+  "task": {
+    "view": "查看",
+    "noDescription": "未提供描述",
+    "unassigned": "未分配"
+  },
+  "tasks": {
+    "title": "护理任务",
+    "subtitle": "AI推荐的干预措施以防止衰退并减轻负担",
+    "newTask": "新任务",
+    "assignedToMe": "分配给我",
+    "allTasks": "所有任务",
+    "active": "活跃",
+    "completed": "已完成",
+    "priority": {
+      "urgent": "紧急",
+      "high": "高",
+      "medium": "中",
+      "low": "低"
+    },
+    "status": {
+      "pending": "待处理",
+      "inProgress": "进行中",
+      "completed": "已完成",
+      "cancelled": "已取消"
+    },
+    "accept": "接受行动",
+    "complete": "完成",
+    "addNote": "添加备注",
+    "details": "任务详情",
+    "assignedTo": "分配给",
+    "createdAt": "创建于",
+    "dueDate": "截止日期"
+  },
+  "alerts": {
+    "memoryIssue": "检测到记忆混乱",
+    "emotionalDistress": "检测到情绪困扰",
+    "medicationConcern": "药物问题",
+    "urgentHelp": "需要紧急帮助",
+    "behavioralChange": "注意到行为变化",
+    "titles": {
+      "healthConcern": "检测到健康问题",
+      "memoryIssue": "记忆/认知问题",
+      "emotionalDistress": "需要情绪支持",
+      "medicationConcern": "需要药物审查",
+      "urgentHelp": "⚠️ 需要紧急关注",
+      "behavioralChange": "注意到行为变化",
+      "cognitiveRisk": "认知风险警报",
+      "careAlert": "护理警报"
+    },
+    "tiers": {
+      "urgent": "紧急",
+      "attention": "关注",
+      "monitor": "监控",
+      "info": "信息"
+    },
+    "sla": {
+      "immediate": "需要立即行动",
+      "twoHours": "2小时内响应",
+      "twentyFourHours": "24小时内响应",
+      "thisWeek": "本周审查",
+      "awareness": "供您了解"
+    },
+    "deleteConfirm": "删除此警报？此操作无法撤销。",
+    "deleteButton": "删除警报"
+  },
+  "call": {
+    "title": "与长者通话",
+    "subtitle": "记录和分析对话以检测问题",
+    "startRecording": "开始录音",
+    "stopRecording": "停止录音",
+    "pause": "暂停",
+    "resume": "恢复",
+    "stop": "停止",
+    "transcript": "转录",
+    "analysis": "AI分析",
+    "noTranscript": "说话以在此处查看转录...",
+    "connecting": "连接中...",
+    "recording": "录音中...",
+    "analyzing": "使用AI分析中..."
+  },
+  "analytics": {
+    "title": "护理分析",
+    "subtitle": "情况是在改善还是恶化？随时间跟踪结果。",
+    "taskCompletion": "任务完成率",
+    "responseTime": "平均响应时间",
+    "activeMembers": "活跃家庭成员",
+    "totalTasks": "总任务数",
+    "distribution": "任务分布",
+    "trends": "行为趋势",
+    "effectiveness": "干预效果"
+  },
+  "profile": {
+    "title": "个人资料设置",
+    "subtitle": "管理您的个人资料和偏好",
+    "personalInfo": "个人信息",
+    "language": "首选语言",
+    "zipCode": "邮政编码",
+    "skills": "技能和专长",
+    "availability": "可用性",
+    "notifications": "通知偏好",
+    "save": "保存更改"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "成功！",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "yes": "是",
+    "no": "否",
+    "viewAll": "查看全部"
+  }
+}

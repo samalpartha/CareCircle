@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareCircle API Tester</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .header p {
+      opacity: 0.9;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    
+    .content {
+      padding: 2rem;
+    }
+    
+    .auth-section {
+      background: #f7fafc;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border-left: 4px solid #667eea;
+    }
+    
+    .auth-section h3 {
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+    
+    .input-group {
+      margin-bottom: 1rem;
+    }
+    
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #4a5568;
+    }
+    
+    .input-group input, .input-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+    
+    .input-group input:focus, .input-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .endpoint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .endpoint-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .endpoint-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      border-color: #667eea;
+    }
+    
+    .endpoint-method {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .method-get {
+      background: #48bb78;
+      color: white;
+    }
+    
+    .method-post {
+      background: #4299e1;
+      color: white;
+    }
+    
+    .method-put {
+      background: #ed8936;
+      color: white;
+    }
+    
+    .endpoint-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #2d3748;
+    }
+    
+    .endpoint-card p {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-test {
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .response-section {
+      margin-top: 2rem;
+      background: #1a202c;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: none;
+    }
+    
+    .response-section.show {
+      display: block;
+    }
+    
+    .response-section h3 {
+      color: white;
+      margin-bottom: 1rem;
+    }
+    
+    .response-code {
+      background: #2d3748;
+      padding: 1rem;
+      border-radius: 8px;
+      color: #68d391;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    
+    .alert-error {
+      background: #fed7d7;
+      color: #742a2a;
+      border-left: 4px solid #fc8181;
+    }
+    
+    .alert-success {
+      background: #c6f6d5;
+      color: #22543d;
+      border-left: 4px solid #48bb78;
+    }
+    
+    .alert-warning {
+      background: #feebc8;
+      color: #7c2d12;
+      border-left: 4px solid #ed8936;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌐 CareCircle API Tester</h1>
+      <p>Interactive API Testing Interface</p>
+      <div class="status">✅ Backend: LIVE</div>
+    </div>
+    
+    <div class="content">
+      <div class="auth-section">
+        <h3>🔐 Authentication</h3>
+        <div class="alert alert-warning">
+          <strong>⚠️ To get your token:</strong><br>
+          1. Open your CareCircle app (localhost:3001)<br>
+          2. Open Browser Console (F12)<br>
+          3. Run: <code>(await fetchAuthSession()).tokens.idToken.toString()</code><br>
+          4. Copy the token and paste below
+        </div>
+        <div class="input-group">
+          <label for="token">Bearer Token:</label>
+          <input type="text" id="token" placeholder="Paste your Cognito JWT token here">
+        </div>
+        <button class="btn btn-primary" onclick="testAuth()">Test Authentication</button>
+      </div>
+      
+      <h2>📋 Available Endpoints</h2>
+      <div class="endpoint-grid">
+        <!-- AI Analysis -->
+        <div class="endpoint-card" onclick="showEndpointTest('ai-analysis')">
+          <span class="endpoint-method method-post">POST</span>
+          <h4>/analyze/transcript</h4>
+          <p>Analyze call transcript with AI (Bedrock Claude, Comprehend)</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('ai-analysis'); event.stopPropagation();">Test API</button>
+        </div>
+        
+        <!-- Alerts -->
+        <div class="endpoint-card" onclick="showEndpointTest('alerts')">
+          <span class="endpoint-method method-get">GET</span>
+          <h4>/alerts</h4>
+          <p>Get all alerts for authenticated user</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('alerts'); event.stopPropagation();">Test API</button>
+        </div>
+        
+        <!-- Tasks GET -->
+        <div class="endpoint-card" onclick="showEndpointTest('tasks-get')">
+          <span class="endpoint-method method-get">GET</span>
+          <h4>/tasks</h4>
+          <p>Get all tasks for authenticated user</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('tasks-get'); event.stopPropagation();">Test API</button>
+        </div>
+        
+        <!-- Tasks POST -->
+        <div class="endpoint-card" onclick="showEndpointTest('tasks-post')">
+          <span class="endpoint-method method-post">POST</span>
+          <h4>/tasks</h4>
+          <p>Create a new care task</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('tasks-post'); event.stopPropagation();">Test API</button>
+        </div>
+        
+        <!-- Analytics -->
+        <div class="endpoint-card" onclick="showEndpointTest('analytics')">
+          <span class="endpoint-method method-get">GET</span>
+          <h4>/analytics</h4>
+          <p>Get analytics and insights</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('analytics'); event.stopPropagation();">Test API</button>
+        </div>
+        
+        <!-- Profile -->
+        <div class="endpoint-card" onclick="showEndpointTest('profile')">
+          <span class="endpoint-method method-get">GET</span>
+          <h4>/profile</h4>
+          <p>Get user profile information</p>
+          <button class="btn btn-primary btn-test" onclick="testEndpoint('profile'); event.stopPropagation();">Test API</button>
+        </div>
+      </div>
+      
+      <div id="response" class="response-section">
+        <h3>📤 Response</h3>
+        <div id="response-content" class="response-code"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = 'https://gb1jhkkzl2.execute-api.us-east-1.amazonaws.com/prod';
+    
+    async function getAuthHeaders() {
+      const token = document.getElementById('token').value.trim();
+      if (!token) {
+        alert('Please enter your Bearer token first!');
+        throw new Error('No token provided');
+      }
+      return {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+    }
+    
+    function showResponse(data, success = true) {
+      const responseSection = document.getElementById('response');
+      const responseContent = document.getElementById('response-content');
+      
+      responseContent.textContent = JSON.stringify(data, null, 2);
+      responseSection.classList.add('show');
+      responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    async function testAuth() {
+      try {
+        console.log('🔍 Testing authentication...');
+        const headers = await getAuthHeaders();
+        console.log('✅ Token retrieved successfully');
+        console.log('Token length:', document.getElementById('token').value.length);
+        
+        // Test with a simple GET request
+        const response = await fetch(`${API_BASE}/alerts`, {
+          method: 'GET',
+          headers
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (response.ok || response.status === 200) {
+          showResponse({ 
+            message: '✅ Authentication successful!',
+            status: response.status,
+            data: data
+          }, true);
+        } else if (response.status === 401) {
+          showResponse({ 
+            error: '❌ Token is invalid or expired',
+            status: 401,
+            hint: 'Please get a fresh token from your app (localhost:3002)'
+          }, false);
+        } else {
+          showResponse({ 
+            message: '⚠️ Token format accepted, but got unexpected status',
+            status: response.status,
+            data: data
+          }, true);
+        }
+      } catch (error) {
+        console.error('Auth test error:', error);
+        showResponse({ 
+          error: error.message,
+          details: error.toString()
+        }, false);
+      }
+    }
+    
+    async function testEndpoint(endpoint) {
+      try {
+        console.log(`🚀 Testing endpoint: ${endpoint}`);
+        const headers = await getAuthHeaders();
+        console.log('Headers:', { ...headers, Authorization: 'Bearer ***' + headers.Authorization.substr(-20) });
+        let response;
+        
+        switch(endpoint) {
+          case 'ai-analysis':
+            response = await fetch(`${API_BASE}/analyze/transcript`, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({
+                transcript: "I feel dizzy and I think I forgot to take my Metformin this morning. What day is it?",
+                duration: 30,
+                language: "en"
+              })
+            });
+            break;
+            
+          case 'alerts':
+            response = await fetch(`${API_BASE}/alerts`, {
+              method: 'GET',
+              headers
+            });
+            break;
+            
+          case 'tasks-get':
+            response = await fetch(`${API_BASE}/tasks`, {
+              method: 'GET',
+              headers
+            });
+            break;
+            
+          case 'tasks-post':
+            response = await fetch(`${API_BASE}/tasks`, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({
+                title: "Call Mom about medication",
+                description: "Follow up on missed Metformin dose",
+                priority: "high",
+                elderName: "Mom"
+              })
+            });
+            break;
+            
+          case 'analytics':
+            response = await fetch(`${API_BASE}/analytics?timeRange=week`, {
+              method: 'GET',
+              headers
+            });
+            break;
+            
+          case 'profile':
+            response = await fetch(`${API_BASE}/profile`, {
+              method: 'GET',
+              headers
+            });
+            break;
+            
+          default:
+            throw new Error('Unknown endpoint');
+        }
+        
+        console.log(`📥 Response received:`, {
+          status: response.status,
+          statusText: response.statusText,
+          ok: response.ok,
+          headers: Object.fromEntries(response.headers.entries())
+        });
+        
+        const data = await response.json();
+        console.log('📦 Response data:', data);
+        
+        if (response.ok) {
+          showResponse({
+            status: response.status,
+            statusText: response.statusText,
+            data: data
+          }, true);
+        } else {
+          showResponse({
+            status: response.status,
+            statusText: response.statusText,
+            error: data
+          }, false);
+        }
+        
+      } catch (error) {
+        console.error('❌ API Test Error:', error);
+        console.error('Error details:', {
+          message: error.message,
+          name: error.name,
+          stack: error.stack
+        });
+        
+        let errorMessage = error.message;
+        let hint = 'Check the browser console (F12) for detailed error information';
+        
+        if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+          errorMessage = 'Network error - could be CORS, timeout, or connection issue';
+          hint = 'Check: 1) Is backend running? 2) CORS enabled? 3) Internet connection?';
+        } else if (error.message.includes('JSON')) {
+          errorMessage = 'Invalid JSON response from server';
+          hint = 'The server may have returned HTML instead of JSON. Check Lambda logs.';
+        }
+        
+        showResponse({
+          error: errorMessage,
+          hint: hint,
+          rawError: error.toString()
+        }, false);
+      }
+    }
+    
+    function showEndpointTest(endpoint) {
+      // Just visual feedback - actual test is done by button click
+      console.log('Selected endpoint:', endpoint);
+    }
+  </script>
+</body>
+</html>
+

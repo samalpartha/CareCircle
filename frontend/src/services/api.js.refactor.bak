@@ -1,0 +1,1449 @@
+import { get, post, put, del } from 'aws-amplify/api';
+import { fetchAuthSession } from 'aws-amplify/auth';
+
+const API_NAME = 'CareCircleAPI';
+
+// Note: With Amplify v6, the API name must match exactly what's in aws-exports.js
+// API.REST.CareCircleAPI
+
+// Helper function to get auth token
+async function getAuthHeaders() {
+  try {
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    
+    if (!token) {
+      console.warn('No auth token found in session');
+      return {};
+    }
+    
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  } catch (error) {
+    console.error('Error getting auth session:', error);
+    return {};
+  }
+}
+
+// Mock data for development (remove in production)
+// Set to true to test UI without backend, false to use real AWS
+const MOCK_MODE = false; // ✅ CONNECTED TO REAL AWS BACKEND
+
+// Alerts API
+export async function getAlerts() {
+  const useMockForAlerts = false; // ✅ USING REAL AWS BACKEND
+  
+  if (MOCK_MODE || useMockForAlerts) {
+    // Check localStorage for alerts
+    const stored = localStorage.getItem('carecircle_alerts');
+    const localAlerts = stored ? JSON.parse(stored) : [];
+    
+    // If we have local alerts, return them
+    if (localAlerts.length > 0) {
+      return localAlerts;
+    }
+    
+    // Otherwise return demo data
+    return [
+      {
+        id: '1',
+        type: 'memoryIssue',
+        severity: 'urgent',
+        message: 'Mom seemed confused about her medication during today\'s call',
+        timestamp: new Date(Date.now() - 3600000).toISOString(),
+      },
+    ];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/alerts',
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error fetching alerts:', error);
+    // Return empty array instead of throwing to prevent dashboard from breaking
+    return [];
+  }
+}
+
+// Tasks API
+export async function getTasks(params = {}) {
+  // ✅ Using real backend for getting tasks
+  const useMockForTasks = false;
+  
+  if (MOCK_MODE || useMockForTasks) {
+    // Check localStorage for created tasks
+    const stored = localStorage.getItem('carecircle_tasks');
+    const localTasks = stored ? JSON.parse(stored) : [];
+    
+    // If we have local tasks, return them
+    if (localTasks.length > 0) {
+      return localTasks;
+    }
+    
+    // Otherwise return demo data
+    return [
+      {
+        id: '1',
+        title: 'Check medication schedule',
+        description: 'Verify if Mom is taking her morning pills correctly',
+        priority: 'urgent',
+        status: 'pending',
+        elderName: 'Mom',
+        assignedTo: null,
+        createdAt: new Date(Date.now() - 7200000).toISOString(),
+      },
+      {
+        id: '2',
+        title: 'Schedule doctor appointment',
+        description: 'Book follow-up appointment with cardiologist',
+        priority: 'high',
+        status: 'pending',
+        elderName: 'Mom',
+        assignedTo: 'Carlos',
+        createdAt: new Date(Date.now() - 86400000).toISOString(),
+      },
+    ];
+  }
+
+  try {
+    const queryParams = new URLSearchParams(params).toString();
+    const restOperation = get({
+      apiName: API_NAME,
+      path: `/tasks?${queryParams}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const data = await response.body.json();
+    
+    // Normalize snake_case from backend to camelCase for frontend consistency
+    const tasks = Array.isArray(data) ? data : [];
+    return tasks.map(task => ({
+      ...task,
+      // Add camelCase versions while keeping originals
+      id: task.task_id || task.id,
+      createdAt: task.created_at || task.createdAt,
+      updatedAt: task.updated_at || task.updatedAt,
+      // Prefer assigned_to_name (username) for display
+      assignedTo: task.assigned_to_name || task.assigned_to || task.assignedTo,
+      elderName: task.elder_name || task.elderName,
+      createdBy: task.created_by || task.createdBy,
+    }));
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    throw error;
+  }
+}
+
+export async function acceptTask(taskId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    // FIX: URL-encode the taskId to handle special characters like # 
+    // Task IDs from backend may contain # (e.g., TASK#20251227225451)
+    // The # character is a URL fragment identifier and must be encoded as %23
+    const encodedTaskId = encodeURIComponent(taskId);
+    
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/tasks/${encodedTaskId}/accept`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error accepting task:', error);
+    throw error;
+  }
+}
+
+export async function completeTask(taskId, notes = '') {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    // FIX: URL-encode taskId to handle special characters like #
+    const encodedTaskId = encodeURIComponent(taskId);
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/tasks/${encodedTaskId}/complete`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: { notes },
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error completing task:', error);
+    throw error;
+  }
+}
+
+export async function createTask(taskData) {
+  // ✅ Using real backend for task creation
+  const useMockForTasks = false; // Backend is ready!
+  
+  if (MOCK_MODE || useMockForTasks) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Create the new task with full data
+    const newTask = {
+      ...taskData,
+      id: 'task-' + Date.now(),
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      assignedTo: null
+    };
+    
+    // Store in localStorage
+    const stored = localStorage.getItem('carecircle_tasks');
+    const tasks = stored ? JSON.parse(stored) : [];
+    tasks.push(newTask);
+    localStorage.setItem('carecircle_tasks', JSON.stringify(tasks));
+    
+    // Return success with task ID
+    return { 
+      success: true, 
+      taskId: newTask.id,
+      message: 'Task created successfully'
+    };
+  }
+
+  try {
+    console.log('Creating task via backend API:', taskData);
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/tasks',
+      options: {
+        headers: await getAuthHeaders(),
+        body: taskData,
+      },
+    });
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    console.log('Task created successfully:', result);
+    
+    // Normalize the response
+    if (result.task) {
+      result.task = {
+        ...result.task,
+        id: result.task.task_id || result.task.id,
+        createdAt: result.task.created_at || result.task.createdAt,
+        updatedAt: result.task.updated_at || result.task.updatedAt,
+        assignedTo: result.task.assigned_to || result.task.assignedTo,
+        elderName: result.task.elder_name || result.task.elderName,
+        createdBy: result.task.created_by || result.task.createdBy,
+      };
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('Error creating task:', error);
+    
+    // Provide more helpful error message
+    const errorMessage = error.response?.body?.message || error.message || 'Unknown error';
+    console.error('Detailed error:', errorMessage);
+    
+    throw new Error(`Failed to create task: ${errorMessage}`);
+  }
+}
+
+// Analytics API
+export async function getAnalytics(params = {}) {
+  const useMockForAnalytics = false; // ✅ USING REAL AWS BACKEND
+  
+  if (MOCK_MODE || useMockForAnalytics) {
+    return {
+      taskCompletion: 85,
+      avgResponseTime: 2.5,
+      activeMembers: 4,
+      totalTasks: 23,
+      tasksByMember: [
+        { name: 'Carlos', value: 8 },
+        { name: 'Ana', value: 7 },
+        { name: 'Miguel', value: 5 },
+        { name: 'Sofia', value: 3 },
+      ],
+      trendsData: [
+        { date: 'Mon', tasks: 3, alerts: 1 },
+        { date: 'Tue', tasks: 5, alerts: 2 },
+        { date: 'Wed', tasks: 4, alerts: 1 },
+        { date: 'Thu', tasks: 6, alerts: 3 },
+        { date: 'Fri', tasks: 4, alerts: 1 },
+        { date: 'Sat', tasks: 2, alerts: 0 },
+        { date: 'Sun', tasks: 1, alerts: 0 },
+      ],
+      effectivenessData: [
+        { category: 'Medical', resolved: 12, pending: 2, escalated: 1 },
+        { category: 'Emotional', resolved: 8, pending: 1, escalated: 0 },
+        { category: 'Daily Living', resolved: 15, pending: 3, escalated: 0 },
+        { category: 'Financial', resolved: 5, pending: 1, escalated: 1 },
+      ],
+      insights: [
+        {
+          type: 'positive',
+          message: 'Task completion rate improved by 15% this month',
+        },
+        {
+          type: 'warning',
+          message: 'Average response time increased slightly this week',
+        },
+        {
+          type: 'info',
+          message: 'Most common issue type: Medication management',
+        },
+      ],
+    };
+  }
+
+  try {
+    const queryParams = new URLSearchParams(params).toString();
+    const restOperation = get({
+      apiName: API_NAME,
+      path: `/analytics?${queryParams}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error fetching analytics:', error);
+    // Return mock data instead of throwing to prevent analytics page from breaking
+    return {
+      taskCompletion: 0,
+      avgResponseTime: 0,
+      activeMembers: 0,
+      totalTasks: 0,
+      tasksByMember: [],
+      trendsData: [],
+      effectivenessData: [],
+      insights: [],
+    };
+  }
+}
+
+// User Profile API
+export async function getUserProfile(userId) {
+  const useMockForProfile = false; // FIX: Changed to false to use real backend
+  
+  if (MOCK_MODE || useMockForProfile) {
+    return {
+      language: 'en',
+      zipCode: '10001',
+      skills: ['Medical/Healthcare', 'Transportation'],
+      availability: 'flexible',
+      notifications: {
+        sms: true,
+        email: true,
+        push: true,
+      },
+    };
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: `/users/${userId}/profile`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const data = await response.body.json();
+    
+    // Return default values if profile doesn't exist yet
+    return {
+      language: data.language || 'en',
+      zipCode: data.zipcode || data.zipCode || '',
+      skills: data.skills || [],
+      availability: data.availability || 'flexible',
+      notifications: data.notifications || {
+        sms: true,
+        email: true,
+        push: true,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    // Return default values on error
+    return {
+      language: 'en',
+      zipCode: '',
+      skills: [],
+      availability: 'flexible',
+      notifications: {
+        sms: true,
+        email: true,
+        push: true,
+      },
+    };
+  }
+}
+
+export async function updateUserProfile(profileData) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const restOperation = put({
+      apiName: API_NAME,
+      path: '/users/profile',
+      options: {
+        headers: await getAuthHeaders(),
+        body: profileData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+}
+
+// Call/Transcription API
+export async function startTranscription() {
+  if (MOCK_MODE) {
+    return { sessionId: 'mock-session-123' };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/transcribe/start',
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error starting transcription:', error);
+    throw error;
+  }
+}
+
+export async function stopTranscription() {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/transcribe/stop',
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error stopping transcription:', error);
+    throw error;
+  }
+}
+
+export async function analyzeTranscript(audioData) {
+  // Real AWS Bedrock AI - with better error handling
+  const useMockForAI = false;
+  
+  if (MOCK_MODE || useMockForAI) {
+    // Simulate AI processing delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return {
+      transcript: audioData.transcript || 'I feel a bit dizzy today. I think I forgot to take my Metformin this morning. What day is it again?',
+      analysis: {
+        summary: '🤖 AI detected health concerns: The elder mentioned feeling dizzy and showed confusion about medication timing, specifically forgetting Metformin (diabetes medication). Also displayed temporal disorientation.',
+        sentiment: 'concerned',
+        urgency: 'high',
+        concerns: [
+          '💊 Medication Adherence: Missed Metformin dose (diabetes medication)',
+          '🤕 Symptom Alert: Dizziness reported - may be related to missed medication',
+          '🧠 Cognitive Concern: Memory confusion and temporal disorientation',
+          '⏰ Time Confusion: Uncertain about current day'
+        ],
+        medicalEntities: [
+          { name: 'Metformin', type: 'MEDICATION', category: 'Diabetes', confidence: 0.98 },
+          { name: 'Dizziness', type: 'SYMPTOM', category: 'General', confidence: 0.95 }
+        ],
+        keyPhrases: [
+          'feel dizzy',
+          'forgot medication',
+          'Metformin',
+          'what day is it'
+        ],
+        recommendation: '⚠️ IMMEDIATE ACTIONS RECOMMENDED:\n\n1. Contact elder immediately to verify medication was taken\n2. Check blood glucose levels (missed diabetes medication)\n3. Investigate cause of dizziness\n4. Review medication schedule with caregiver\n5. Consider implementing medication reminder system\n6. Monitor for additional confusion or disorientation',
+        riskScores: {
+          cognitive: 62,
+          medicationAdherence: 48,
+          overallHealth: 58
+        },
+        aiProvider: 'Mock Mode (Uses Amazon Bedrock Claude + Comprehend Medical when backend deployed)',
+      },
+    };
+  }
+
+  try {
+    const headers = await getAuthHeaders();
+    console.log('🚀 Sending AI analysis request...');
+    console.log('API Name:', API_NAME);
+    console.log('Path:', '/analyze/transcript');
+    console.log('Auth token present:', !!headers.Authorization);
+    console.log('Audio data:', audioData);
+    
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/analyze/transcript',
+      options: {
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: audioData,
+      },
+    });
+    
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    console.log('✅ AI analysis successful:', result);
+    return result;
+  } catch (error) {
+    console.error('❌ Error analyzing transcript:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      response: error.response
+    });
+    
+    // More helpful error messages
+    if (error.message?.includes('API name is invalid')) {
+      throw new Error('Configuration error. Please refresh the page (Cmd+Shift+R) and try again.');
+    } else if (error.message?.includes('Unauthorized') || error.message?.includes('401')) {
+      throw new Error('Authentication failed. Please sign out and sign in again.');
+    } else if (error.message?.includes('403')) {
+      throw new Error('Permission denied. Your account may not have access to AI analysis.');
+    } else if (error.message?.includes('Network')) {
+      throw new Error('Network error. Please check your internet connection.');
+    } else if (error.message?.includes('502')) {
+      throw new Error('Backend error (502). The Lambda function may be broken. Please check deployment.');
+    } else {
+      throw new Error(`AI Analysis failed: ${error.message || 'Unknown error'}. Try refreshing (Cmd+Shift+R).`);
+    }
+  }
+}
+
+// Elder Management API
+export async function getElders() {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    const stored = localStorage.getItem('carecircle_elders');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/elders',
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error fetching elders:', error);
+    return [];
+  }
+}
+
+export async function createElder(elderData) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const newElder = {
+      ...elderData,
+      id: 'elder-' + Date.now(),
+      createdAt: new Date().toISOString()
+    };
+    
+    // Store in localStorage
+    const stored = localStorage.getItem('carecircle_elders');
+    const elders = stored ? JSON.parse(stored) : [];
+    elders.push(newElder);
+    localStorage.setItem('carecircle_elders', JSON.stringify(elders));
+    
+    return { success: true, id: newElder.id };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/elders',
+      options: {
+        headers: await getAuthHeaders(),
+        body: elderData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating elder:', error);
+    throw error;
+  }
+}
+
+export async function updateElder(elderId, elderData) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const stored = localStorage.getItem('carecircle_elders');
+    const elders = stored ? JSON.parse(stored) : [];
+    const index = elders.findIndex(e => e.id === elderId);
+    
+    if (index !== -1) {
+      elders[index] = { ...elders[index], ...elderData };
+      localStorage.setItem('carecircle_elders', JSON.stringify(elders));
+    }
+    
+    return { success: true };
+  }
+
+  try {
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/elders/${elderId}`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: elderData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error updating elder:', error);
+    throw error;
+  }
+}
+
+export async function deleteElder(elderId) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteElder',message:'Delete elder called',data:{elderId},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
+  // #endregion
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const stored = localStorage.getItem('carecircle_elders');
+    const elders = stored ? JSON.parse(stored) : [];
+    const filtered = elders.filter(e => e.id !== elderId);
+    localStorage.setItem('carecircle_elders', JSON.stringify(filtered));
+    
+    return { success: true };
+  }
+
+  try {
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/elders/${encodeURIComponent(elderId)}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteElder',message:'Delete elder success',data:{elderId,result},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
+    // #endregion
+    return result;
+  } catch (error) {
+    console.error('Error deleting elder:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteElder',message:'Delete elder failed',data:{elderId,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
+    // #endregion
+    throw error;
+  }
+}
+
+// Caregiver Management API
+export async function getCaregivers() {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    const stored = localStorage.getItem('carecircle_caregivers');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/caregivers',
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error fetching caregivers:', error);
+    return [];
+  }
+}
+
+export async function createCaregiver(caregiverData) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const newCaregiver = {
+      ...caregiverData,
+      id: 'caregiver-' + Date.now(),
+      createdAt: new Date().toISOString()
+    };
+    
+    const stored = localStorage.getItem('carecircle_caregivers');
+    const caregivers = stored ? JSON.parse(stored) : [];
+    caregivers.push(newCaregiver);
+    localStorage.setItem('carecircle_caregivers', JSON.stringify(caregivers));
+    
+    return { success: true, id: newCaregiver.id };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/caregivers',
+      options: {
+        headers: await getAuthHeaders(),
+        body: caregiverData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating caregiver:', error);
+    throw error;
+  }
+}
+
+export async function updateCaregiver(caregiverId, caregiverData) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const stored = localStorage.getItem('carecircle_caregivers');
+    const caregivers = stored ? JSON.parse(stored) : [];
+    const index = caregivers.findIndex(c => c.id === caregiverId);
+    
+    if (index !== -1) {
+      caregivers[index] = { ...caregivers[index], ...caregiverData };
+      localStorage.setItem('carecircle_caregivers', JSON.stringify(caregivers));
+    }
+    
+    return { success: true };
+  }
+
+  try {
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/caregivers/${caregiverId}`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: caregiverData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error updating caregiver:', error);
+    throw error;
+  }
+}
+
+export async function deleteCaregiver(caregiverId) {
+  // ✅ USING REAL AWS BACKEND
+  const useMockForFamily = false;
+  
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteCaregiver',message:'Delete caregiver called',data:{caregiverId},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
+  // #endregion
+  
+  if (MOCK_MODE || useMockForFamily) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const stored = localStorage.getItem('carecircle_caregivers');
+    const caregivers = stored ? JSON.parse(stored) : [];
+    const filtered = caregivers.filter(c => c.id !== caregiverId);
+    localStorage.setItem('carecircle_caregivers', JSON.stringify(filtered));
+    
+    return { success: true };
+  }
+
+  try {
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/caregivers/${encodeURIComponent(caregiverId)}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteCaregiver',message:'Delete caregiver success',data:{caregiverId,result},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
+    return result;
+  } catch (error) {
+    console.error('Error deleting caregiver:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteCaregiver',message:'Delete caregiver failed',data:{caregiverId,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
+    throw error;
+  }
+}
+
+export async function deleteTask(taskId) {
+  // ✅ USING REAL AWS BACKEND
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteTask',message:'Delete task called',data:{taskId},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
+  // #endregion
+  
+  if (MOCK_MODE) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const stored = localStorage.getItem('carecircle_tasks');
+    const tasks = stored ? JSON.parse(stored) : [];
+    const filtered = tasks.filter(t => t.id !== taskId);
+    localStorage.setItem('carecircle_tasks', JSON.stringify(filtered));
+    return { success: true };
+  }
+
+  try {
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/tasks/${encodeURIComponent(taskId)}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteTask',message:'Delete task success',data:{taskId,result},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
+    // #endregion
+    return result;
+  } catch (error) {
+    console.error('Error deleting task:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteTask',message:'Delete task failed',data:{taskId,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
+    // #endregion
+    throw error;
+  }
+}
+
+export async function deleteAlert(alertId) {
+  // ✅ USING REAL AWS BACKEND
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteAlert',message:'Delete alert called',data:{alertId},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H4'})}).catch(()=>{});
+  // #endregion
+  
+  if (MOCK_MODE) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const stored = localStorage.getItem('carecircle_alerts');
+    const alerts = stored ? JSON.parse(stored) : [];
+    const filtered = alerts.filter(a => a.id !== alertId);
+    localStorage.setItem('carecircle_alerts', JSON.stringify(filtered));
+    return { success: true };
+  }
+
+  try {
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/alerts/${encodeURIComponent(alertId)}`,
+      options: {
+        headers: await getAuthHeaders(),
+      },
+    });
+    const response = await restOperation.response;
+    const result = await response.body.json();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteAlert',message:'Delete alert success',data:{alertId,result},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H4'})}).catch(()=>{});
+    // #endregion
+    return result;
+  } catch (error) {
+    console.error('Error deleting alert:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/590fd628-b7fe-4383-be50-0b87edc8093d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'api.js:deleteAlert',message:'Delete alert failed',data:{alertId,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H4'})}).catch(()=>{});
+    // #endregion
+    throw error;
+  }
+}
+
+// =============================================
+// CALL RECORDS API
+// =============================================
+
+export async function getCalls() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/calls',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting calls:', error);
+    throw error;
+  }
+}
+
+export async function createCall(callData) {
+  if (MOCK_MODE) {
+    return { success: true, call_id: `CALL#${Date.now()}` };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/calls',
+      options: {
+        headers: await getAuthHeaders(),
+        body: callData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating call:', error);
+    throw error;
+  }
+}
+
+export async function getCall(callId) {
+  if (MOCK_MODE) {
+    return null;
+  }
+
+  try {
+    const encodedId = encodeURIComponent(callId);
+    const restOperation = get({
+      apiName: API_NAME,
+      path: `/calls/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting call:', error);
+    throw error;
+  }
+}
+
+export async function deleteCall(callId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(callId);
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/calls/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error deleting call:', error);
+    throw error;
+  }
+}
+
+// =============================================
+// MEDICATIONS API
+// =============================================
+
+export async function getMedications() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/medications',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting medications:', error);
+    throw error;
+  }
+}
+
+export async function createMedication(medication) {
+  if (MOCK_MODE) {
+    return { success: true, medication_id: `MED#${Date.now()}` };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/medications',
+      options: {
+        headers: await getAuthHeaders(),
+        body: medication,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating medication:', error);
+    throw error;
+  }
+}
+
+export async function updateMedication(medicationId, medication) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(medicationId);
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/medications/${encodedId}`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: medication,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error updating medication:', error);
+    throw error;
+  }
+}
+
+export async function deleteMedication(medicationId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(medicationId);
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/medications/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error deleting medication:', error);
+    throw error;
+  }
+}
+
+export async function logMedicationTaken(medicationId, logData) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(medicationId);
+    const restOperation = post({
+      apiName: API_NAME,
+      path: `/medications/${encodedId}/log`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: logData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error logging medication:', error);
+    throw error;
+  }
+}
+
+// =============================================
+// EMERGENCY CONTACTS API
+// =============================================
+
+export async function getEmergencyContacts() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/emergency-contacts',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting emergency contacts:', error);
+    throw error;
+  }
+}
+
+export async function createEmergencyContact(contact) {
+  if (MOCK_MODE) {
+    return { success: true, contact_id: `CONTACT#${Date.now()}` };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/emergency-contacts',
+      options: {
+        headers: await getAuthHeaders(),
+        body: contact,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating emergency contact:', error);
+    throw error;
+  }
+}
+
+export async function updateEmergencyContact(contactId, contact) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(contactId);
+    const restOperation = put({
+      apiName: API_NAME,
+      path: `/emergency-contacts/${encodedId}`,
+      options: {
+        headers: await getAuthHeaders(),
+        body: contact,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error updating emergency contact:', error);
+    throw error;
+  }
+}
+
+export async function deleteEmergencyContact(contactId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(contactId);
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/emergency-contacts/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error deleting emergency contact:', error);
+    throw error;
+  }
+}
+
+export async function getMedicalId() {
+  if (MOCK_MODE) {
+    return {
+      name: 'Unknown',
+      conditions: [],
+      allergies: [],
+      medications: [],
+      emergency_contacts: [],
+    };
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/medical-id',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting medical ID:', error);
+    throw error;
+  }
+}
+
+// =============================================
+// HEALTH CONDITIONS & ALLERGIES API
+// =============================================
+
+export async function getHealthConditions() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/health-conditions',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting health conditions:', error);
+    throw error;
+  }
+}
+
+export async function createHealthCondition(condition) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/health-conditions',
+      options: {
+        headers: await getAuthHeaders(),
+        body: condition,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating health condition:', error);
+    throw error;
+  }
+}
+
+export async function deleteHealthCondition(conditionId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(conditionId);
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/health-conditions/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error deleting health condition:', error);
+    throw error;
+  }
+}
+
+export async function getAllergies() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/allergies',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting allergies:', error);
+    throw error;
+  }
+}
+
+export async function createAllergy(allergy) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/allergies',
+      options: {
+        headers: await getAuthHeaders(),
+        body: allergy,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error creating allergy:', error);
+    throw error;
+  }
+}
+
+export async function deleteAllergy(allergyId) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const encodedId = encodeURIComponent(allergyId);
+    const restOperation = del({
+      apiName: API_NAME,
+      path: `/allergies/${encodedId}`,
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error deleting allergy:', error);
+    throw error;
+  }
+}
+
+// =============================================
+// WELLNESS API
+// =============================================
+
+export async function getWellness() {
+  if (MOCK_MODE) {
+    return [];
+  }
+
+  try {
+    const restOperation = get({
+      apiName: API_NAME,
+      path: '/wellness',
+      options: { headers: await getAuthHeaders() },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error getting wellness:', error);
+    throw error;
+  }
+}
+
+export async function logWellness(wellnessData) {
+  if (MOCK_MODE) {
+    return { success: true };
+  }
+
+  try {
+    const restOperation = post({
+      apiName: API_NAME,
+      path: '/wellness',
+      options: {
+        headers: await getAuthHeaders(),
+        body: wellnessData,
+      },
+    });
+    const response = await restOperation.response;
+    return await response.body.json();
+  } catch (error) {
+    console.error('Error logging wellness:', error);
+    throw error;
+  }
+}
+
+// Export all API functions as an object
+export const api = {
+  // Existing
+  getAlerts,
+  getTasks,
+  createTask,
+  acceptTask,
+  completeTask,
+  deleteTask,
+  getAnalytics,
+  getUserProfile,
+  updateUserProfile,
+  startTranscription,
+  stopTranscription,
+  analyzeTranscript,
+  getElders,
+  createElder,
+  updateElder,
+  deleteElder,
+  getCaregivers,
+  createCaregiver,
+  updateCaregiver,
+  deleteCaregiver,
+  deleteAlert,
+  // New: Call Records
+  getCalls,
+  createCall,
+  getCall,
+  deleteCall,
+  // New: Medications
+  getMedications,
+  createMedication,
+  updateMedication,
+  deleteMedication,
+  logMedicationTaken,
+  // New: Emergency Contacts
+  getEmergencyContacts,
+  createEmergencyContact,
+  updateEmergencyContact,
+  deleteEmergencyContact,
+  getMedicalId,
+  // New: Health Conditions & Allergies
+  getHealthConditions,
+  createHealthCondition,
+  deleteHealthCondition,
+  getAllergies,
+  createAllergy,
+  deleteAllergy,
+  // New: Wellness
+  getWellness,
+  logWellness,
+};
+

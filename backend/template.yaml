@@ -1,0 +1,248 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: CareCircle Backend - AWS SAM Template
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.11
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: !Ref CareCircleTable
+        POWERTOOLS_SERVICE_NAME: CareCircle
+        LOG_LEVEL: INFO
+
+Resources:
+  # DynamoDB Table
+  CareCircleTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: CareCircle-Data
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      SSESpecification:
+        SSEEnabled: true
+
+  # API Gateway
+  CareCircleAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: CareCircle-API
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !GetAtt CareCircleUserPool.Arn
+
+  # Cognito User Pool
+  CareCircleUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: CareCircle-Users
+      AutoVerifiedAttributes:
+        - email
+      Schema:
+        - Name: email
+          Required: true
+          Mutable: false
+        - Name: preferred_username
+          Required: true
+          Mutable: true
+        - Name: language
+          AttributeDataType: String
+          Mutable: true
+        - Name: zipcode
+          AttributeDataType: String
+          Mutable: true
+
+  CareCircleUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: CareCircle-Web-Client
+      UserPoolId: !Ref CareCircleUserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_SRP_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+
+  # EventBridge Bus
+  CareCircleEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: CareCircle-Events
+
+  # Lambda Functions
+  TranscribeHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/transcribe-handler/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CareCircleTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - transcribe:StartStreamTranscription
+                - transcribe:StartTranscriptionJob
+              Resource: '*'
+      Events:
+        StartTranscribe:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /transcribe/start
+            Method: POST
+        StopTranscribe:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /transcribe/stop
+            Method: POST
+
+  AIAnalysisFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/ai-analysis/
+      Handler: app.lambda_handler
+      Timeout: 60
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CareCircleTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - comprehend:DetectSentiment
+                - comprehend:DetectEntities
+                - comprehend:DetectKeyPhrases
+                - translate:TranslateText
+                - bedrock:InvokeModel
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - events:PutEvents
+              Resource: !GetAtt CareCircleEventBus.Arn
+      Events:
+        AnalyzeTranscript:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /analyze/transcript
+            Method: POST
+
+  TaskAssignmentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/task-assignment/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CareCircleTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - sns:Publish
+              Resource: !Ref NotificationTopic
+      Events:
+        AlertEvent:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CareCircleEventBus
+            Pattern:
+              source:
+                - carecircle.alerts
+              detail-type:
+                - Alert Created
+
+  NotificationHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/notification-handler/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CareCircleTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - sns:Publish
+                - ses:SendEmail
+              Resource: '*'
+
+  APIHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/api-handlers/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CareCircleTable
+      Events:
+        ProxyRoute:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /{proxy+}
+            Method: ANY
+        RootRoute:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CareCircleAPI
+            Path: /
+            Method: ANY
+
+  # SNS Topic for Notifications
+  NotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: CareCircle-Notifications
+      DisplayName: CareCircle Notifications
+
+Outputs:
+  CareCircleAPI:
+    Description: API Gateway endpoint URL
+    Value: !Sub 'https://${CareCircleAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/'
+  UserPoolId:
+    Description: Cognito User Pool ID
+    Value: !Ref CareCircleUserPool
+  UserPoolClientId:
+    Description: Cognito User Pool Client ID
+    Value: !Ref CareCircleUserPoolClient
+  DynamoDBTable:
+    Description: DynamoDB Table Name
+    Value: !Ref CareCircleTable
+

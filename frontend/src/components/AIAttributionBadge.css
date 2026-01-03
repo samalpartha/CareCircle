@@ -1,0 +1,71 @@
+/* AI Attribution Badge Component */
+
+.ai-attribution-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  cursor: help;
+}
+
+.ai-attribution-badge:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.badge-icon {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.badge-text {
+  line-height: 1;
+}
+
+/* Variant Styles */
+.ai-badge-default {
+  /* Styles applied via inline styles */
+}
+
+.ai-badge-solid {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ai-badge-solid:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ai-badge-minimal {
+  background: transparent !important;
+}
+
+/* Size Variants */
+.ai-attribution-badge.badge-sm {
+  padding: 0.1875rem 0.5rem;
+  font-size: 0.6875rem;
+}
+
+.ai-attribution-badge.badge-lg {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.8125rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .ai-attribution-badge {
+    font-size: 0.6875rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .badge-icon {
+    font-size: 0.75rem;
+  }
+}
+
